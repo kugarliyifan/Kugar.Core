@@ -1,0 +1,183 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
+    <RootNamespace>Kugar.Core</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.2.78</Version>
+    <Authors>Kugar</Authors>
+    <LangVersion>latest</LangVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PackageReleaseNotes>1.增加ResultReturn/VM_PagedList 对Camel序列化name的支持
+2.VM_PagedList 增加一个 IPagedList接口,直接 IPagedList&lt;out T&gt;
+3.修正SetMinute函数的bug
+</PackageReleaseNotes>
+    <Description>一个提供基础类库和扩展函数的类库</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\bin\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Kugar.Core\BaseStruct\ArraySegmentEx.cs" Link="BaseStruct\ArraySegmentEx.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\ArrayToListWrapper.cs" Link="BaseStruct\ArrayToListWrapper.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\AsyncResultBase.cs" Link="BaseStruct\AsyncResultBase.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\AtomInt16.cs" Link="BaseStruct\AtomInt16.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\AutoExpireValue.cs" Link="BaseStruct\AutoExpireValue.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\AutoResetEventPool.cs" Link="BaseStruct\AutoResetEventPool.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\BufferManager.cs" Link="BaseStruct\BufferManager.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\ByteStream.cs" Link="BaseStruct\ByteStream.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\CallBackTimer.cs" Link="BaseStruct\CallBackTimer.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\DatabaseConnectDisplay.cs" Link="BaseStruct\DatabaseConnectDisplay.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\DataItemList.cs" Link="BaseStruct\DataItemList.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\DateTimeRanage.cs" Link="BaseStruct\DateTimeRanage.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\IAwaitable.cs" Link="BaseStruct\IAwaitable.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\JoinMultiEnumable.cs" Link="BaseStruct\JoinMultiEnumable.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\KeyValuePairEx.cs" Link="BaseStruct\KeyValuePairEx.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\KNotifyCollectionChanged.cs" Link="BaseStruct\KNotifyCollectionChanged.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\Lazy.cs" Link="BaseStruct\Lazy.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\ListItemObject.cs" Link="BaseStruct\ListItemObject.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\MultiTypeKeyDictionary.cs" Link="BaseStruct\MultiTypeKeyDictionary.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\MutileThreadingTimer.cs" Link="BaseStruct\MutileThreadingTimer.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\NewValueCollection.cs" Link="BaseStruct\NewValueCollection.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\NotifyChangedField.cs" Link="BaseStruct\NotifyChangedField.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\Pool.cs" Link="BaseStruct\Pool.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\RandomEx.cs" Link="BaseStruct\RandomEx.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\ResultReturn.cs" Link="BaseStruct\ResultReturn.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\SpinLock.cs" Link="BaseStruct\SpinLock.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\SpinWait.cs" Link="BaseStruct\SpinWait.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\TaskManager.cs" Link="BaseStruct\TaskManager.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\TimerEx.cs" Link="BaseStruct\TimerEx.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\TimerPool.cs" Link="BaseStruct\TimerPool.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\Tree.cs" Link="BaseStruct\Tree.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\ValueFormatTemplateEngine.cs" Link="BaseStruct\ValueFormatTemplateEngine.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\VM_PagedList.cs" Link="BaseStruct\VM_PagedList.cs" />
+    <Compile Include="..\Kugar.Core\Collections\AutoTimeoutCollection.cs" Link="Collections\AutoTimeoutCollection.cs" />
+    <Compile Include="..\Kugar.Core\Collections\AutoTimeoutDictioanry.cs" Link="Collections\AutoTimeoutDictioanry.cs" />
+    <Compile Include="..\Kugar.Core\Collections\BindingListEx.cs" Link="Collections\BindingListEx.cs" />
+    <Compile Include="..\Kugar.Core\Collections\CircularQueue.cs" Link="Collections\CircularQueue.cs" />
+    <Compile Include="..\Kugar.Core\Collections\DictionaryEx.cs" Link="Collections\DictionaryEx.cs" />
+    <Compile Include="..\Kugar.Core\Collections\EventsCollection.cs" Link="Collections\EventsCollection.cs" />
+    <Compile Include="..\Kugar.Core\Collections\HashCycleQueue.cs" Link="Collections\HashCycleQueue.cs" />
+    <Compile Include="..\Kugar.Core\Collections\HashQueue.cs" Link="Collections\HashQueue.cs" />
+    <Compile Include="..\Kugar.Core\Collections\IntIndexAutoTimeoutSet.cs" Link="Collections\IntIndexAutoTimeoutSet.cs" />
+    <Compile Include="..\Kugar.Core\Collections\IntIndexDictioanry.cs" Link="Collections\IntIndexDictioanry.cs" />
+    <Compile Include="..\Kugar.Core\Collections\LinkedListEx.cs" Link="Collections\LinkedListEx.cs" />
+    <Compile Include="..\Kugar.Core\Collections\ListEx.cs" Link="Collections\ListEx.cs" />
+    <Compile Include="..\Kugar.Core\Collections\MutileKeysDictionary.cs" Link="Collections\MutileKeysDictionary.cs" />
+    <Compile Include="..\Kugar.Core\Collections\MutileValuesDictionary.cs" Link="Collections\MutileValuesDictionary.cs" />
+    <Compile Include="..\Kugar.Core\Collections\RollingbackList.cs" Link="Collections\RollingbackList.cs" />
+    <Compile Include="..\Kugar.Core\Compare\FloatComparer.cs" Link="Compare\FloatComparer.cs" />
+    <Compile Include="..\Kugar.Core\Compare\GeneralComparer.cs" Link="Compare\GeneralComparer.cs" />
+    <Compile Include="..\Kugar.Core\Compare\Int16Comparer.cs" Link="Compare\Int16Comparer.cs" />
+    <Compile Include="..\Kugar.Core\Compare\Int32Comparer.cs" Link="Compare\Int32Comparer.cs" />
+    <Compile Include="..\Kugar.Core\Compare\StringComparer.cs" Link="Compare\StringComparer.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\ConfigItem.cs" Link="Configuration\ConfigItem.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\ConfigItemDataType.cs" Link="Configuration\ConfigItemDataType.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\ConfigurationNameValueCollection.cs" Link="Configuration\ConfigurationNameValueCollection.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\IConfigProvider.cs" Link="Configuration\IConfigProvider.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\ICustomConfigSection.cs" Link="Configuration\ICustomConfigSection.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\Providers\DotNetConfigAppSettingsProvider.cs" Link="Configuration\Providers\DotNetConfigAppSettingsProvider.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\Providers\DotNetConfigConnectionSectionProvider.cs" Link="Configuration\Providers\DotNetConfigConnectionSectionProvider.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\Providers\DotNetConfigKugarCoreConfigProvider.cs" Link="Configuration\Providers\DotNetConfigKugarCoreConfigProvider.cs" />
+    <Compile Include="..\Kugar.Core\Configuration\Providers\DotNetConfigNameValueProvider.cs" Link="Configuration\Providers\DotNetConfigNameValueProvider.cs" />
+    <Compile Include="..\Kugar.Core\EventHander\CancelableEventArgs.cs" Link="EventHander\CancelableEventArgs.cs" />
+    <Compile Include="..\Kugar.Core\EventHander\EventHelper.cs" Link="EventHander\EventHelper.cs" />
+    <Compile Include="..\Kugar.Core\Exceptions\ArgumentTypeNotMatch.cs" Link="Exceptions\ArgumentTypeNotMatch.cs" />
+    <Compile Include="..\Kugar.Core\Exceptions\ExceptionHelper.cs" Link="Exceptions\ExceptionHelper.cs" />
+    <Compile Include="..\Kugar.Core\Exceptions\ObjectNullException.cs" Link="Exceptions\ObjectNullException.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ArrayExtMethod.cs" Link="ExtMethod\ArrayExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\BindingListExt.cs" Link="ExtMethod\BindingListExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ByteArrayAbout.cs" Link="ExtMethod\ByteArrayAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ColorExt.cs" Link="ExtMethod\ColorExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\Compression.cs" Link="ExtMethod\Compression.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\DataEncrypt.cs" Link="ExtMethod\DataEncrypt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\DataSourceCreator.cs" Link="ExtMethod\DataSourceCreator.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\DateTimeExt.cs" Link="ExtMethod\DateTimeExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\DelegateExtMethod.cs" Link="ExtMethod\DelegateExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\DictionaryAbout.cs" Link="ExtMethod\DictionaryAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\DrawExt.cs" Link="ExtMethod\DrawExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\EnumAbout.cs" Link="ExtMethod\EnumAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ExpressionExtMethod.cs" Link="ExtMethod\ExpressionExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\GuidExtensions.cs" Link="ExtMethod\GuidExtensions.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ImageExt.cs" Link="ExtMethod\ImageExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\IntExtMethod.cs" Link="ExtMethod\IntExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\IOExtMethod.cs" Link="ExtMethod\IOExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\IPAbout.cs" Link="ExtMethod\IPAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\JsonExtMethod.cs" Link="ExtMethod\JsonExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\LocationExtMethod.cs" Link="ExtMethod\LocationExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\MethodExt.cs" Link="ExtMethod\MethodExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\NumericValueAbout.cs" Link="ExtMethod\NumericValueAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ObjectAbout.cs" Link="ExtMethod\ObjectAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ObjParse.cs" Link="ExtMethod\ObjParse.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\SerialObjectExt.cs" Link="ExtMethod\SerialObjectExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\SQLExt.cs" Link="ExtMethod\SQLExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\StreamAbout.cs" Link="ExtMethod\StreamAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\StringAbout.cs" Link="ExtMethod\StringAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\StringRegex.cs" Link="ExtMethod\StringRegex.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\TypeDocumentationExt.cs" Link="ExtMethod\TypeDocumentationExt.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\TypeExtMethod.cs" Link="ExtMethod\TypeExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\UriAbout.cs" Link="ExtMethod\UriAbout.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\ValueUtility.cs" Link="ExtMethod\ValueUtility.cs" />
+    <Compile Include="..\Kugar.Core\ExtMethod\XmlExtMethod.cs" Link="ExtMethod\XmlExtMethod.cs" />
+    <Compile Include="..\Kugar.Core\Log\ILogFactory.cs" Link="Log\ILogFactory.cs" />
+    <Compile Include="..\Kugar.Core\Log\ILogger.cs" Link="Log\ILogger.cs" />
+    <Compile Include="..\Kugar.Core\Log\LoggerManager.cs" Link="Log\LoggerManager.cs" />
+    <Compile Include="..\Kugar.Core\Network\NamedPipe\ProcessNamedPipe.cs" Link="Network\NamedPipe\ProcessNamedPipe.cs" />
+    <Compile Include="..\Kugar.Core\Network\NetworkHelper.cs" Link="Network\NetworkHelper.cs" />
+    <Compile Include="..\Kugar.Core\Reflection\ObjectReflectionExt.cs" Link="Reflection\ObjectReflectionExt.cs" />
+    <Compile Include="..\Kugar.Core\Reflection\SubsetTypeDescriptionProvider.cs" Link="Reflection\SubsetTypeDescriptionProvider.cs" />
+    <Compile Include="..\Kugar.Core\Serialization\JSONCustomDateConverter.cs" Link="Serialization\JSONCustomDateConverter.cs" />
+    <Compile Include="..\Kugar.Core\Serialization\Serialization.cs" Link="Serialization\Serialization.cs" />
+    <Compile Include="..\Kugar.Core\ShortGuid.cs" Link="BaseStruct\ShortGuid.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Collections\" />
+    <Folder Include="EventHander\" />
+    <Folder Include="Log\" />
+    <Folder Include="Compare\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Network\NamedPipe\" />
+    <Folder Include="Reflection\" />
+    <Folder Include="Serialization\" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <PackageReference Include="Fasterflect.Netstandard" Version="1.0.8" />
+    <PackageReference Include="LINQKit.Core" Version="1.1.15" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.2' ">
+    <PackageReference Include="Fasterflect.Netstandard" Version="1.0.8" />
+    <PackageReference Include="LINQKit.Core" Version="1.1.15" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
+    <PackageReference Include="Fasterflect.Netstandard" Version="1.0.8" />
+    <PackageReference Include="LINQKit.Core" Version="1.1.16" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.6.0" />
+  </ItemGroup>
+
+</Project>

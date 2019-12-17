@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19C21784-C9DE-4092-9061-F53E0DE44111}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kugar.Core</RootNamespace>
+    <AssemblyName>Kugar.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>http://localhost/Kugar.Core/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET4,NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>ExtendedCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\bin\Kugar.Core.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NET2</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET45,NET4</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Kugar.Core.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ExtendedCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Optimize>false</Optimize>
+    <IntermediateOutputPath>C:\Users\kugar\AppData\Local\Temp\vs758C.tmp\Debug\</IntermediateOutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>..\bin\Kugar.Core.xml</DocumentationFile>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE;NET2</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Kugar.Core.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <IntermediateOutputPath>C:\Users\kugar\AppData\Local\Temp\vs758C.tmp\Release\</IntermediateOutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AsmClassLibrary.cs" />
+    <Compile Include="Authority\AuthorityValidator.cs" />
+    <Compile Include="BaseStruct\ArrayToListWrapper.cs" />
+    <Compile Include="BaseStruct\AsyncResultBase.cs" />
+    <Compile Include="BaseStruct\AtomInt16.cs" />
+    <Compile Include="BaseStruct\AutoExpireValue.cs" />
+    <Compile Include="BaseStruct\AutoResetEventPool.cs" />
+    <Compile Include="BaseStruct\BufferManager.cs" />
+    <Compile Include="BaseStruct\ByteStream.cs" />
+    <Compile Include="BaseStruct\CallBackTimer.cs" />
+    <Compile Include="BaseStruct\DatabaseConnectDisplay.cs" />
+    <Compile Include="BaseStruct\DataRowPropertyDescriptor.cs" />
+    <Compile Include="BaseStruct\DateTimeRanage.cs" />
+    <Compile Include="BaseStruct\GlobalCache.cs" />
+    <Compile Include="BaseStruct\IAwaitable.cs" />
+    <Compile Include="BaseStruct\JoinMultiEnumable.cs" />
+    <Compile Include="BaseStruct\KeyValuePairEx.cs" />
+    <Compile Include="BaseStruct\ListItemObject.cs" />
+    <Compile Include="BaseStruct\MultiTypeKeyDictionary.cs" />
+    <Compile Include="BaseStruct\NewValueCollection.cs" />
+    <Compile Include="BaseStruct\NotifyChangedField.cs" />
+    <Compile Include="BaseStruct\ResultReturn.cs" />
+    <Compile Include="BaseStruct\Tree.cs" />
+    <Compile Include="BaseStruct\VM_PagedList.cs" />
+    <Compile Include="BaseStruct\WrapObject.cs" />
+    <Compile Include="Collections\AutoTimeoutCollection.cs" />
+    <Compile Include="Collections\AutoTimeoutDictioanry.cs" />
+    <Compile Include="Collections\BindingListEx.cs" />
+    <Compile Include="Collections\CircularQueue.cs" />
+    <Compile Include="Collections\Concurrent\ConcurrentSkipList.cs" />
+    <Compile Include="BaseStruct\SpinLock.cs" />
+    <Compile Include="BaseStruct\SpinWait.cs" />
+    <Compile Include="Collections\Concurrent\ConcurrentDictionary.cs" />
+    <Compile Include="Collections\Concurrent\ConcurrentQueue.cs" />
+    <Compile Include="Collections\Concurrent\IProducerConsumerCollection.cs" />
+    <Compile Include="Collections\HashCycleQueue.cs" />
+    <Compile Include="Collections\HashQueue.cs" />
+    <Compile Include="Collections\IntIndexAutoTimeoutSet.cs" />
+    <Compile Include="Collections\IntIndexDictioanry.cs" />
+    <Compile Include="Collections\LinkedListEx.cs" />
+    <Compile Include="Collections\RollingbackList.cs" />
+    <Compile Include="Collections\DictionaryToTable.cs" />
+    <Compile Include="Collections\EventsCollection.cs" />
+    <Compile Include="BaseStruct\Lazy.cs" />
+    <Compile Include="BaseStruct\RandomEx.cs" />
+    <Compile Include="BaseStruct\TaskManager.cs" />
+    <Compile Include="BaseStruct\TimerEx.cs" />
+    <Compile Include="BaseStruct\TimerPool.cs" />
+    <Compile Include="BaseStruct\ValueFormatTemplateEngine.cs" />
+    <Compile Include="Collections\ReadOnlyDictionary.cs" />
+    <Compile Include="Collections\ReadOnlyDictionaryEx.cs" />
+    <Compile Include="Configuration\ConfigItem.cs" />
+    <Compile Include="Configuration\ConfigItemDataType.cs" />
+    <Compile Include="Configuration\Providers\DotNetConfigAppSettingsProvider.cs" />
+    <Compile Include="Configuration\Providers\DotNetConfigConnectionSectionProvider.cs" />
+    <Compile Include="Configuration\ICustomConfigSection.cs" />
+    <Compile Include="Configuration\IConfigProvider.cs" />
+    <Compile Include="Configuration\ICustomConfigManager.cs" />
+    <Compile Include="Configuration\Providers\DotNetConfigKugarCoreConfigProvider.cs" />
+    <Compile Include="Configuration\Providers\DotNetConfigNameValueProvider.cs" />
+    <Compile Include="EF\EFExtMethod.cs" />
+    <Compile Include="Enums\EnabledEx.cs" />
+    <Compile Include="EventHander\CancelableEventArgs.cs" />
+    <Compile Include="Exceptions\ArgumentTypeNotMatch.cs" />
+    <Compile Include="Exceptions\ExceptionHelper.cs" />
+    <Compile Include="ExtMethod\ADOExt.cs" />
+    <Compile Include="ExtMethod\AppDomainExt.cs" />
+    <Compile Include="ExtMethod\ColorExt.cs" />
+    <Compile Include="ExtMethod\DrawExt.cs" />
+    <Compile Include="ExtMethod\ExpressionExtMethod.cs" />
+    <Compile Include="ExtMethod\GuidExtensions.cs" />
+    <Compile Include="ExtMethod\ImageExt.cs" />
+    <Compile Include="ExtMethod\IntExtMethod.cs" />
+    <Compile Include="ExtMethod\IOExtMethod.cs" />
+    <Compile Include="ExtMethod\JsonExtMethod.cs" />
+    <Compile Include="ExtMethod\LocationExtMethod.cs" />
+    <Compile Include="ExtMethod\MethodExt.cs" />
+    <Compile Include="ExtMethod\MimeTypeMap.cs" />
+    <Compile Include="ExtMethod\ObjParse.cs" />
+    <Compile Include="ExtMethod\RegistryExtMethod.cs" />
+    <Compile Include="ExtMethod\RemotingExtMethod.cs" />
+    <Compile Include="ExtMethod\SQLExt.cs" />
+    <Compile Include="ExtMethod\TypeDocumentationExt.cs" />
+    <Compile Include="ExtMethod\UriAbout.cs" />
+    <Compile Include="ExtMethod\ValueUtility.cs" />
+    <Compile Include="ExtMethod\XmlExtMethod.cs" />
+    <Compile Include="GlobalSetting.cs" />
+    <Compile Include="Hardware\Hardware.cs" />
+    <Compile Include="Image\ImageExt.cs" />
+    <Compile Include="Image\LockBitmap.cs" />
+    <Compile Include="Linq\DynamicLinqQueryBuilder.cs" />
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\ILogFactory.cs" />
+    <Compile Include="Log\LoggerManager.cs" />
+    <Compile Include="MultiThread\InterlockedEx.cs" />
+    <Compile Include="MultiThread\MultiThreadQueue.cs" />
+    <Compile Include="ByteDataConverter\ByteConverter.cs" />
+    <Compile Include="ByteDataConverter\ByteToDataItem.cs" />
+    <Compile Include="ByteDataConverter\DataEnum.cs" />
+    <Compile Include="EventHander\EventHelper.cs" />
+    <Compile Include="Exceptions\ObjectNullException.cs" />
+    <Compile Include="ExtMethod\ArrayExtMethod.cs" />
+    <Compile Include="ExtMethod\Compression.cs" />
+    <Compile Include="ExtMethod\DelegateExtMethod.cs" />
+    <Compile Include="ExtMethod\ListExtMethod.part2.cs" />
+    <Compile Include="IO\MemoryMappingFile.cs" />
+    <Compile Include="Image\VerifyCodeImage.cs" />
+    <Compile Include="Image\ThumbnailImage.cs" />
+    <Compile Include="IO\FileManager.cs" />
+    <Compile Include="Collections\StandbyKeyToKey.cs" />
+    <Compile Include="BaseStruct\KNotifyCollectionChanged.cs" />
+    <Compile Include="Network\InternalProcess\InternalProcessPipeClient.cs" />
+    <Compile Include="Network\InternalProcess\InternalProcessBrocker.cs" />
+    <Compile Include="Network\InternalProcess\InternalProcessPipeServerBase.cs" />
+    <Compile Include="Network\Web\RequestLocal.cs" />
+    <Compile Include="MultiThread\SimpleTask.cs" />
+    <Compile Include="Network\Dialup\RasDialup.cs" />
+    <Compile Include="Network\NetworkHelper.cs" />
+    <Compile Include="Network\Web\RequestThreadLocal.cs" />
+    <Compile Include="Network\Web\WebHelper.cs" />
+    <Compile Include="Printer\Attributes\Attributes.cs" />
+    <Compile Include="Printer\ColumnConfig.cs" />
+    <Compile Include="Printer\Enums\DynamicColumnValueChangedAction.cs" />
+    <Compile Include="Printer\Enums\DynamicColumnChangedAction.cs" />
+    <Compile Include="Printer\DetailWithDynamicColumnsCollection.cs" />
+    <Compile Include="Printer\DynamicColumn.cs" />
+    <Compile Include="Printer\EventArg.cs" />
+    <Compile Include="Printer\IDetailWithDynamicColumnsCollection.cs" />
+    <Compile Include="Printer\Enums\PrintElementDisplayType.cs" />
+    <Compile Include="Printer\PrintElementItem.cs" />
+    <Compile Include="Printer\Enums\PrintElementLocation.cs" />
+    <Compile Include="Printer\PrinterDataProviderInterface.cs" />
+    <Compile Include="Printer\PrinterInterface.cs" />
+    <Compile Include="Printer\PrintFormatItemInfo.cs" />
+    <Compile Include="Printer\UniversalBlock.cs" />
+    <Compile Include="Printer\UniversalPrintSchema.cs" />
+    <None Include="app.config" />
+    <None Include="Properties\AssemblyInfo.template.cs" />
+    <Compile Include="Network\NamedPipe\ProcessNamedPipe.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\SubsetTypeDescriptionProvider.cs" />
+    <Compile Include="Serialization\JSONCustomDateConverter.cs" />
+    <Compile Include="SystemManager\Api.cs" />
+    <Compile Include="SystemManager\RegistryManager.cs" />
+    <Compile Include="SystemManager\SystemManager.cs" />
+    <Compile Include="Network\NetworkNeighborhood\LocalNetwork.cs" />
+    <Compile Include="Network\RSS\RSS.cs" />
+    <Compile Include="Network\Ping\Ping.cs" />
+    <Compile Include="Compare\GeneralComparer.cs" />
+    <Compile Include="Compare\FloatComparer.cs" />
+    <Compile Include="Compare\Int16Comparer.cs" />
+    <Compile Include="Compare\Int32Comparer.cs" />
+    <Compile Include="Configuration\ConfigurationNameValueCollection.cs" />
+    <Compile Include="ExtMethod\BindingListExt.cs" />
+    <Compile Include="ExtMethod\ByteArrayAbout.cs" />
+    <Compile Include="ExtMethod\DataSourceCreator.cs" />
+    <Compile Include="ExtMethod\DateTimeExt.cs" />
+    <Compile Include="ExtMethod\SerialObjectExt.cs" />
+    <Compile Include="ExtMethod\StreamAbout.cs" />
+    <Compile Include="ExtMethod\DataEncrypt.cs" />
+    <Compile Include="ExtMethod\StringRegex.cs" />
+    <Compile Include="ExtMethod\DataAbout.cs" />
+    <Compile Include="ExtMethod\DictionaryAbout.cs" />
+    <Compile Include="ExtMethod\EnumAbout.cs" />
+    <Compile Include="ExtMethod\IPAbout.cs" />
+    <Compile Include="ExtMethod\ListExtMethod.cs" />
+    <Compile Include="ExtMethod\NumericValueAbout.cs" />
+    <Compile Include="ExtMethod\ObjectAbout.cs" />
+    <Compile Include="ExtMethod\TypeExtMethod.cs" />
+    <Compile Include="Collections\DictionaryEx.cs" />
+    <Compile Include="Collections\MutileKeysDictionary.cs" />
+    <None Include="Collections\LightDataTable.cs" />
+    <Compile Include="Collections\ListEx.cs" />
+    <Compile Include="Collections\MutileValuesDictionary.cs" />
+    <Compile Include="BaseStruct\Pool.cs" />
+    <Compile Include="ExtMethod\StringAbout.cs" />
+    <Compile Include="Serialization\Serialization.cs" />
+    <Compile Include="Reflection\ObjectReflectionExt.cs" />
+    <Compile Include="ShortGuid.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Fasterflect, Version=2.1.3.0, Culture=neutral, PublicKeyToken=38d18473284c1ca7, processorArchitecture=MSIL">
+      <HintPath>..\packages\fasterflect.2.1.3\lib\net40\Fasterflect.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LinqKit.Core, Version=1.1.9.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.Core.1.1.9.0\lib\net45\LinqKit.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OOXML.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core">
+      <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Configuration\Readme.txt" />
+    <None Include="Image\Readme.txt" />
+    <None Include="Log\Readme.txt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IO\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Network\NetworkNeighborhood\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
