@@ -21,7 +21,7 @@ namespace Kugar.Core.NetCore.Test
         [TestMethod]
     public void TestUrlModifier()
     {
-        var url = "https://www.xxx.com/doc/base/infrastructure.html";
+        var url = "https://www.xxx.com/doc/base/infrastructure.html?";
         var newUrl = url.ToUrlModifier().SetAnchor("topoop").RemoveQuery("keyword").ReplaceQuery("pppp", "iii")
             .AddQuery("o1", "ooo");
         var newUrlStr = newUrl.ToString();

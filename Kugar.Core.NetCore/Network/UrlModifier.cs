@@ -52,7 +52,15 @@ namespace Kugar.Core.Network
 
             if (hostEndIndex > 0)
             {
-                _hostAndPath = url.Substring(0, hostEndIndex + 1);
+                if (url[hostEndIndex]=='?')  //处理 http://xxxx.com/ss/ss? 的情况
+                {
+                    _hostAndPath = url.Substring(0, hostEndIndex);
+                }
+                else
+                {
+                    _hostAndPath = url.Substring(0, hostEndIndex + 1);
+                }
+                
                 hostEndIndex++;
             }
 
