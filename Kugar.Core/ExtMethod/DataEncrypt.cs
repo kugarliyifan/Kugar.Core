@@ -152,16 +152,16 @@ namespace Kugar.Core.ExtMethod
         {
             return MD5_32(str).Left(16);
 
-            var b = MD5_32Array(str);
+            //var b = MD5_32Array(str);
 
-            if (b == null || b.Length <= 0)
-            {
-                return "";
-            }
+            //if (b == null || b.Length <= 0)
+            //{
+            //    return "";
+            //}
 
-            return b.Take(16).JoinToString();
+            //return b.Take(16).JoinToString();
    
-            return BitConverter.ToString(b).Substring(0, 16);
+            //return BitConverter.ToString(b).Substring(0, 16);
         }
 
         public static ushort GetCRCCode(this byte[] data)

@@ -381,22 +381,7 @@ namespace Kugar.Core.ExtMethod
         //    return t;
         //}
 
-        public static string JoinToString<T>(this IEnumerable<T> n)
-        {
-            return JoinToString(n, ',');
-        }
-
-        public static string JoinToString<T>(this IEnumerable<T> n, char splite)
-        {
-            return JoinToString(n, splite, "", "");
-        }
-
-        public static string JoinToString<T>(this IEnumerable<T> n, string splite)
-        {
-            return JoinToString(n, splite, "", "");
-        }
-
-        public static string JoinToString<T>(this IEnumerable<T> n, string splite, string beforeChar, string endChar)
+        public static string JoinToString<T>(this IEnumerable<T> n, string splite=",", string beforeChar="", string endChar="")
         {
             if (n == null)
             {
@@ -414,7 +399,7 @@ namespace Kugar.Core.ExtMethod
             return s.ToStringEx().Trim(splite);
         }
 
-        public static string JoinToString<T>(this IEnumerable<T> n, char splite, string beforeChar, string endChar)
+        public static string JoinToString<T>(this IEnumerable<T> n, char splite=',', string beforeChar="", string endChar="")
         {
             if (n == null)
             {
@@ -432,6 +417,25 @@ namespace Kugar.Core.ExtMethod
             return s.ToStringEx().Trim(splite);
         }
 
+
+        public static string JoinToString<T>(this IEnumerable<T> n, Func<T,string> newStrFactory, string splite = ",",
+            string beforeChar = "", string endChar = "")
+        {
+            if (n == null)
+            {
+                return String.Empty;
+            }
+
+            var s = new StringBuilder(200);
+
+            foreach (var n1 in n)
+            {
+
+                s.Append(String.Format("{0}{1}{2}{3}", beforeChar, newStrFactory(n1).ToStringEx(), endChar, splite));
+            }
+
+            return s.ToStringEx().Trim(splite);
+        }
 
         public static T[] Random<T>(this IEnumerable<T> src)
         {

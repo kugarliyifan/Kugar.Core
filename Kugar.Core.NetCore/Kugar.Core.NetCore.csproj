@@ -4,14 +4,12 @@
     <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
     <RootNamespace>Kugar.Core</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.78</Version>
+    <Version>1.2.79</Version>
     <Authors>Kugar</Authors>
     <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PackageReleaseNotes>1.增加ResultReturn/VM_PagedList 对Camel序列化name的支持
-2.VM_PagedList 增加一个 IPagedList接口,直接 IPagedList&lt;out T&gt;
-3.修正SetMinute函数的bug
-</PackageReleaseNotes>
+    <PackageReleaseNotes>1.增加UrlModifier类
+2.修改了JoinToString函数</PackageReleaseNotes>
     <Description>一个提供基础类库和扩展函数的类库</Description>
   </PropertyGroup>
 
@@ -141,7 +139,6 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Network\NamedPipe\" />
     <Folder Include="Reflection\" />
-    <Folder Include="Serialization\" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
