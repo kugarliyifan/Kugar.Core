@@ -42,17 +42,15 @@ namespace Kugar.Core.Network
 
             //截取域名段,包含协议,端口号等
             var hostEndIndex = endIndex;
-            var containHost = false;
             for (int i = 0; i < endIndex; i++)
             {
                 if (url[i] == '?')
                 {
                     hostEndIndex = i - 1;
-                    containHost = true;
                 }
             }
 
-            if (containHost)
+            if (hostEndIndex > 0)
             {
                 _hostAndPath = url.Substring(0, hostEndIndex + 1);
                 hostEndIndex++;
