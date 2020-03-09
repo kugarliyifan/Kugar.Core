@@ -192,6 +192,30 @@ namespace Kugar.Core.Network
         }
 
         /// <summary>
+        /// 添加一对参数值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public UrlModifier AddQuery(string key, object value)
+        {
+            //如果存在相同的Key的,则直接附加到原有值的后面
+            var index = _queryKeys.IndexOf(x => x.key.CompareTo(key, true));
+
+            if (index > 0)
+            {
+                var orgValue = _queryKeys[index].value;
+                _queryKeys[index] = (key, $"{orgValue},{value}");
+            }
+            else
+            {
+                _queryKeys.Add((key, value.ToStringEx()));
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// 添加一个keyvalue
         /// </summary>
         /// <param name="pair"></param>
@@ -206,9 +230,34 @@ namespace Kugar.Core.Network
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public UrlModifier RemoveQuery(string key)
+        public UrlModifier RemoveQuery(params string[] keys)
         {
-            _queryKeys.Remove(x => x.key == key);
+            if (keys.HasData())
+            {
+                _queryKeys.Remove(x => keys.Contains(x.key, StringComparer.InvariantCultureIgnoreCase));
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// 删除指定key的项目中的某个值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public UrlModifier RemoveQuery(string key,string value)
+        {
+            var index = _queryKeys.IndexOf(x => x.key.CompareTo(key, true));
+
+            if (index > 0)
+            {
+                var orgValue = _queryKeys[index].value;
+
+                var newValues = orgValue.Split(',').Remove(x => x.CompareTo(value, true));
+
+                _queryKeys[index] = (key, newValues.JoinToString(','));
+            }
+            
 
             return this;
         }
@@ -230,6 +279,28 @@ namespace Kugar.Core.Network
             else
             {
                 _queryKeys[index] = (key, value);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// 替换指定key的数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public UrlModifier ReplaceQuery(string key, object value)
+        {
+            var index = _queryKeys.IndexOf(x => x.key == key);
+
+            if (index < 0)
+            {
+                _queryKeys.Add((key, value.ToString()));
+            }
+            else
+            {
+                _queryKeys[index] = (key, value.ToString());
             }
 
             return this;

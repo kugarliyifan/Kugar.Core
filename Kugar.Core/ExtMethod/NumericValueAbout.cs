@@ -332,6 +332,25 @@ namespace Kugar.Core.ExtMethod
             return false;
         }
 
+        /// <summary>
+        ///     判断指定的int值是否在给定的值列表内
+        /// </summary>
+        /// <param name="n">指定的数值</param>
+        /// <param name="lst">给定的匹配列表</param>
+        /// <returns></returns>
+        public static bool IsInList(this int n,params int[] lst)
+        {
+            foreach (var i in lst)
+            {
+                if (i == n)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
         public static int DivRem(this int n, int divnum)
         {

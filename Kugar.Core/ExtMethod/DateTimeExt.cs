@@ -247,7 +247,7 @@ namespace Kugar.Core.ExtMethod
             return new DateTime(dt.Year, 1, 1, 0, 0, 0);
         }
 
-        public static string ToStringEx(this DateTime dt,string format)
+        public static string ToStringEx(this DateTime dt, DateFormat format= DateFormat.DateWithTime)
         {
             if (dt==DateTime.MinValue || dt==DateTime.MinValue)
             {
@@ -255,7 +255,31 @@ namespace Kugar.Core.ExtMethod
             }
             else
             {
+                return dt.ToStringEx(format== DateFormat.Date?"yyyy-MM-dd":"yyyy-MM-dd HH:mm:ss");
+            }
+        }
+
+        public static string ToStringEx(this DateTime dt, string format)
+        {
+            if (dt == DateTime.MinValue || dt == DateTime.MinValue)
+            {
+                return "";
+            }
+            else
+            {
                 return dt.ToString(format);
+            }
+        }
+
+        public static string ToStringEx(this DateTime? dt, DateFormat format = DateFormat.DateWithTime)
+        {
+            if (dt == DateTime.MinValue || dt == DateTime.MinValue)
+            {
+                return "";
+            }
+            else
+            {
+                return dt.ToStringEx(format == DateFormat.Date ? "yyyy-MM-dd" : "yyyy-MM-dd HH:mm:ss");
             }
         }
 
@@ -405,6 +429,13 @@ namespace Kugar.Core.ExtMethod
 
             return dt;
         }
+    }
+
+    public enum DateFormat
+    {
+        Date,
+
+        DateWithTime
     }
 
     [Flags]

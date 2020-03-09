@@ -381,6 +381,7 @@ namespace Kugar.Core.ExtMethod
         //    return t;
         //}
 
+
         public static string JoinToString<T>(this IEnumerable<T> n, string splite=",", string beforeChar="", string endChar="")
         {
             if (n == null)
@@ -392,31 +393,36 @@ namespace Kugar.Core.ExtMethod
 
             foreach (var n1 in n)
             {
+                if (!string.IsNullOrEmpty(beforeChar))
+                {
+                    s.Append(beforeChar);
+                }
 
-                s.Append(String.Format("{0}{1}{2}{3}", beforeChar, n1.ToStringEx(), endChar, splite));
+                s.Append(n1.ToStringEx());
+
+                if (!string.IsNullOrEmpty(endChar))
+                {
+                    s.Append(endChar);
+                }
+
+                if (!string.IsNullOrEmpty(splite))
+                {
+                    s.Append(splite);
+                }
+                
+                //s.Append(String.Format("{0}{1}{2}{3}", beforeChar, n1.ToStringEx(), endChar, splite));
             }
 
-            return s.ToStringEx().Trim(splite);
-        }
-
-        public static string JoinToString<T>(this IEnumerable<T> n, char splite=',', string beforeChar="", string endChar="")
-        {
-            if (n == null)
+            if (!string.IsNullOrEmpty(splite))
             {
-                return String.Empty;
+                if (s[s.Length] == splite[0])
+                {
+                    s.Remove(s.Length - 1, 1);
+                }
             }
 
-            var s = new StringBuilder(200);
-
-            foreach (var n1 in n)
-            {
-
-                s.Append(String.Format("{0}{1}{2}{3}", beforeChar, n1.ToStringEx(), endChar, splite));
-            }
-
-            return s.ToStringEx().Trim(splite);
+            return s.ToStringEx();
         }
-
 
         public static string JoinToString<T>(this IEnumerable<T> n, Func<T,string> newStrFactory, string splite = ",",
             string beforeChar = "", string endChar = "")
@@ -430,11 +436,35 @@ namespace Kugar.Core.ExtMethod
 
             foreach (var n1 in n)
             {
+                if (!string.IsNullOrEmpty(beforeChar))
+                {
+                    s.Append(beforeChar);
+                }
 
-                s.Append(String.Format("{0}{1}{2}{3}", beforeChar, newStrFactory(n1).ToStringEx(), endChar, splite));
+                s.Append(n1.ToStringEx());
+
+                if (!string.IsNullOrEmpty(endChar))
+                {
+                    s.Append(endChar);
+                }
+
+                if (!string.IsNullOrEmpty(splite))
+                {
+                    s.Append(splite);
+                }
+
+                //s.Append(String.Format("{0}{1}{2}{3}", beforeChar, n1.ToStringEx(), endChar, splite));
             }
 
-            return s.ToStringEx().Trim(splite);
+            if (!string.IsNullOrEmpty(splite))
+            {
+                if (s[s.Length] == splite[0])
+                {
+                    s.Remove(s.Length - 1, 1);
+                }
+            }
+
+            return s.ToStringEx();
         }
 
         public static T[] Random<T>(this IEnumerable<T> src)

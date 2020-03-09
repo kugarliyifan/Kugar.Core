@@ -476,6 +476,26 @@ namespace Kugar.Core.ExtMethod
             return condition ? source.Where(predicate) : source;
         }
 
+        /// <summary>
+        /// 当前值是否在指定列表中
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static bool IsIn<T>(this T source, params T[] values) where T : IComparable
+        {
+            foreach (var item in values)
+            {
+                if (item.CompareTo(source)==0)
+                {
+                    return true;
+                }   
+            }
+
+            return false;
+        }
+
 
         [Obsolete]
         public static TResult[] ChangeType<TSource, TResult>(this TSource[] src, ChangeTypeFunc<TSource, TResult> func)
@@ -1170,6 +1190,13 @@ namespace Kugar.Core.ExtMethod
             return t;
         }
 
+        /// <summary>
+        /// 删除指定项目
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="src"></param>
+        /// <param name="checkFunc"></param>
+        /// <returns></returns>
         public static IList<T> Remove<T>(this IList<T> src, Predicate<T> checkFunc)
         {
             if (checkFunc == null || src == null || src.Count <= 0)
@@ -1177,7 +1204,7 @@ namespace Kugar.Core.ExtMethod
                 return src;
             }
 
-            var tempList = new List<T>(src.Count / 2);
+            var tempList = new List<T>((src.Count / 2).ToMaxInt(5));
 
             foreach (var s in src)
             {
