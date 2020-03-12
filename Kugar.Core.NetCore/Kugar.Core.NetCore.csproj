@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
     <RootNamespace>Kugar.Core</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.83</Version>
+    <Version>1.2.92</Version>
     <Authors>Kugar</Authors>
     <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -498,14 +498,16 @@ namespace Kugar.Core.BaseStruct
             var returnCode = (int)value.GetPropertyValue("ReturnCode");
             var returnData = value.GetPropertyValue("ReturnData");
 
-            var isCamel = serializer.ContractResolver is CamelCasePropertyNamesContractResolver;
+            //var isCamel = serializer.ContractResolver is CamelCasePropertyNamesContractResolver;
 
             writer.WriteStartObject();
 
-            writer.WritePropertyName(isCamel?"isSuccess": "IsSuccess");
+            var c = serializer.ContractResolver as DefaultContractResolver;
+
+            writer.WritePropertyName(c?.GetResolvedPropertyName("IsSuccess")??"IsSuccess");
             writer.WriteValue(isSuccess);
 
-            writer.WritePropertyName(isCamel ? "returnData": "ReturnData");
+            writer.WritePropertyName(c?.GetResolvedPropertyName("ReturnData")??"ReturnData");
 
             Type type = null;
 
@@ -552,7 +554,7 @@ namespace Kugar.Core.BaseStruct
             }
 
 
-            writer.WritePropertyName(isCamel ?"error": "Error");
+            writer.WritePropertyName(c?.GetResolvedPropertyName("Error") ?? "Error");
 
             if (error == null)
             {
@@ -565,7 +567,7 @@ namespace Kugar.Core.BaseStruct
             }
             
 
-            writer.WritePropertyName(isCamel ? "message":"Message");
+            writer.WritePropertyName(c?.GetResolvedPropertyName("Message") ?? "Message");
 
             if (message==null)
             {
@@ -577,7 +579,7 @@ namespace Kugar.Core.BaseStruct
             }
             
 
-            writer.WritePropertyName(isCamel ? "returnCode": "ReturnCode");
+            writer.WritePropertyName(c?.GetResolvedPropertyName("ReturnCode") ?? "ReturnCode");
             writer.WriteValue(returnCode);
 
             writer.WriteEndObject();

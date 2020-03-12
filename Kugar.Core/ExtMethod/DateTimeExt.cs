@@ -387,11 +387,16 @@ namespace Kugar.Core.ExtMethod
         /// <returns></returns>
         public static DateTime ToLocalDatetimeFromUTCSeconds(this int utfSec)
         {
-            var s = (long) utfSec;
-
-            DateTime dt = new DateTime(s*1000000 + DatetimeMinTimeTicks,DateTimeKind.Local);//转化为DateTime
+            DateTime dt = _locStartTime.AddSeconds(utfSec);
 
             return dt;
+
+
+            //var s = (long) utfSec;
+
+            //DateTime dt = new DateTime(s*1000000 + DatetimeMinTimeTicks,DateTimeKind.Local);//转化为DateTime
+
+            //return dt;
         }
 
         /// <summary>
@@ -401,10 +406,16 @@ namespace Kugar.Core.ExtMethod
         /// <returns></returns>
         public static DateTime ToLocalDatetimeFromUTCMilliseconds(this int utfSec)
         {
-            DateTime dt = new DateTime(utfSec * 1000 + DatetimeMinTimeTicks, DateTimeKind.Local);//转化为DateTime
+            DateTime dt = _locStartTime.AddMilliseconds(utfSec);
 
             return dt;
+
+            //DateTime dt = new DateTime(utfSec * 1000 + DatetimeMinTimeTicks, DateTimeKind.Local);//转化为DateTime
+
+            //return dt;
         }
+
+        private static System.DateTime _locStartTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
 
         /// <summary>
         /// 从秒数转换为datetime,本地时间
@@ -413,7 +424,12 @@ namespace Kugar.Core.ExtMethod
         /// <returns></returns>
         public static DateTime ToLocalDatetimeFromUTCSeconds(this long utfSec)
         {
-            DateTime dt = new DateTime(utfSec * 1000000 + DatetimeMinTimeTicks, DateTimeKind.Local);//转化为DateTime
+            
+            DateTime dt = _locStartTime.AddSeconds(utfSec);
+
+            return dt;
+
+            //DateTime dt = new DateTime(utfSec * 1000000 + DatetimeMinTimeTicks, DateTimeKind.Local);//转化为DateTime
 
             return dt;
         }
@@ -425,9 +441,14 @@ namespace Kugar.Core.ExtMethod
         /// <returns></returns>
         public static DateTime ToLocalDatetimeFromUTCMilliseconds(this long utfSec)
         {
-            DateTime dt = new DateTime(utfSec * 1000000 + DatetimeMinTimeTicks, DateTimeKind.Local);//转化为DateTime
+            DateTime dt = _locStartTime.AddMilliseconds(utfSec);
 
             return dt;
+
+
+            //DateTime dt = new DateTime(utfSec * 1000000 + DatetimeMinTimeTicks, DateTimeKind.Local);//转化为DateTime
+
+            //return dt;
         }
     }
 

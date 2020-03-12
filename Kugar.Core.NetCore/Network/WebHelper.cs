@@ -644,7 +644,7 @@ namespace Kugar.Core.Network
 
                 if (_cookies.IsValueCreated && _cookies.Value.HasData())
                 {
-                    var cookie = _cookies.Value.Select(x => $"{x.Key}={x.Value};").JoinToString(' ');
+                    var cookie = _cookies.Value.Select(x => $"{x.Key}={x.Value};").JoinToString(" ");
 
                     _requestMsg.Headers.Add("Cookie", cookie);
                 }

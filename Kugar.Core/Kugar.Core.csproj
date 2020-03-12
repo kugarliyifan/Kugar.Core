@@ -98,6 +98,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Kugar.Core.NetCore\BaseStruct\ArraySlice.cs">
+      <Link>BaseStruct\ArraySlice.cs</Link>
+    </Compile>
     <Compile Include="AsmClassLibrary.cs" />
     <Compile Include="Authority\AuthorityValidator.cs" />
     <Compile Include="BaseStruct\ArrayToListWrapper.cs" />

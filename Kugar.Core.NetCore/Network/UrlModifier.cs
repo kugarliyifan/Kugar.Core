@@ -255,7 +255,7 @@ namespace Kugar.Core.Network
 
                 var newValues = orgValue.Split(',').Remove(x => x.CompareTo(value, true));
 
-                _queryKeys[index] = (key, newValues.JoinToString(','));
+                _queryKeys[index] = (key, newValues.JoinToString(","));
             }
             
 

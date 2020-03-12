@@ -1,4 +1,5 @@
 using System;
+using Kugar.Core.BaseStruct;
 
 namespace Kugar.Core.ExtMethod
 {
@@ -66,6 +67,11 @@ namespace Kugar.Core.ExtMethod
             }
 
             return desIndex;
+        }
+
+        public static ArraySlice<T> SliceEx<T>(this T[] array, int offset, int count)
+        {
+            return new ArraySlice<T>(array,offset,count);
         }
     }
 

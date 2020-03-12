@@ -32,8 +32,8 @@ using System.Security;
 //      内部版本号
 //      修订号
 //
-[assembly: AssemblyVersion("1.2.40")]
-[assembly: AssemblyFileVersion("1.2.40")]
+[assembly: AssemblyVersion("1.2.68")]
+[assembly: AssemblyFileVersion("1.2.68")]
 
 #if true 
 #if DEBUG 
