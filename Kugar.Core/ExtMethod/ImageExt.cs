@@ -1,18 +1,8 @@
 using System;
 using System.Collections.Generic;
-
-#if NETCOREAPP2_1 || NETCOREAPP2_0 || NETCOREAPP2_2 || NETCOREAPP3_0
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-#endif
-
-#if NET45
-using System.Drawing;
-using System.Drawing.Drawing2D;
-     using System.Drawing.Imaging; 
-#endif
-
 
 
 using System.Linq;

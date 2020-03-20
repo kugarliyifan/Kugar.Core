@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Drawing;
 #if NETCOREAPP2_1 || NETCOREAPP2_2 || NETCOREAPP3_0
 using System.Drawing;
 #endif
@@ -35,7 +35,7 @@ namespace Kugar.Core.ExtMethod
             node.SetAttribute("Bold", font.Bold.ToString());
             node.SetAttribute("Italic", font.Italic.ToString());
             bool strikeout = false;
-#if NET45 || NETCOREAPP2_0
+#if NET45 || NETCOREAPP2_0 || NETCOREAPP
             strikeout = font.Strikeout;
 #endif
 #if NETSTANDARD2_0
