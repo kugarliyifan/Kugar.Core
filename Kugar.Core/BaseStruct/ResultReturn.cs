@@ -487,7 +487,7 @@ namespace Kugar.Core.BaseStruct
         private bool _isGeneric = false;
         private static Type _jObjectType = typeof (JObject);
         private static Type _objectType = typeof (object);
-
+        private static object _emptyObj=new object();
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -521,27 +521,38 @@ namespace Kugar.Core.BaseStruct
                     
                 //    writer.WritePropertyName(typeof(JObject).FullName);
                 ////}
-
+                if (returnData==null)
+                {
+                    serializer.Serialize(writer,_emptyObj, type);
+                }
+                else
+                {
+                    serializer.Serialize(writer, returnData, type);
+                }
                 //if (type==typeof(JObject))
                 //{
                 //    JObject.FromObject(returnData).WriteTo(writer);
                 //}
                 //else
                 //{
-                    serializer.Serialize(writer, returnData??new object[0], type);
+                    
                 //}
             }
             else
             {
                 if (returnData==null)
                 {
-                    writer.WriteStartArray();
-                    writer.WriteEndArray();
+                    writer.WriteStartObject();
+                    writer.WriteEndObject();
+
+                    //writer.WriteStartArray();
+                    //writer.WriteEndArray();
                     //serializer.Serialize(writer, returnData);
                 }
                 else
                 {
-                    serializer.Serialize(writer, returnData);
+                    type = value.GetType();
+                    serializer.Serialize(writer, returnData,type);
                     
                     //var typeName = returnData.GetType().AssemblyQualifiedName;
 
