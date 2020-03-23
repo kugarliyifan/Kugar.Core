@@ -109,7 +109,11 @@ namespace Kugar.Core.ExtMethod
         /// <param name="str">源字符串</param>
         /// <param name="isForce32Length">是否强制补满32个字符,如果为false,则不强制补齐32个字符,如果为true,则强制补齐32个长度的字符</param>
         /// <returns>返回计算后的MD5码字符串</returns>
-        public static string MD5_32(this string str,bool isForce32Length=false)
+#if  NETCOREAPP3_1
+        public static string MD5_32(this string str,bool isForce32Length=true)
+#else
+        public static string MD5_32(this string str, bool isForce32Length = false)
+#endif
         {
             var b = MD5_32Array(str);
 
@@ -235,7 +239,7 @@ namespace Kugar.Core.ExtMethod
             return BitConverter.ToString(HashedArray).Replace("-", "");
         }
 
-        #region "CRC16Table"
+#region "CRC16Table"
         private static readonly ushort[] CRC16Table = new ushort[]{   0x0000, 0xC0C1, 0xC181, 0x0140, 0xC301, 0x03C0, 0x0280,
 		                                                            0xC241, 0xC601, 0x06C0, 0x0780, 0xC741, 0x0500, 0xC5C1,
 		                                                            0xC481, 0x0440, 0xCC01, 0x0CC0, 0x0D80, 0xCD41, 0x0F00,
@@ -274,6 +278,6 @@ namespace Kugar.Core.ExtMethod
 		                                                            0x47C0, 0x4680, 0x8641, 0x8201, 0x42C0, 0x4380, 0x8341,
 		                                                            0x4100, 0x81C1, 0x8081, 0x4040 };
 
-        #endregion
+#endregion
     }
 }
