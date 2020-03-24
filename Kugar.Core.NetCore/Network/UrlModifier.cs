@@ -151,7 +151,8 @@ namespace Kugar.Core.Network
                 {
                     if (lastKeyword == '=' && !string.IsNullOrEmpty(keyword)) //处理 ?d=value 的情况
                     {
-                        value = url.Substring(startIndex, endIndex - startIndex);
+                        //startIndex--;
+                        value = url.Substring(startIndex, endIndex - startIndex+1);
                     }
                     else if ((lastKeyword == '=' && string.IsNullOrEmpty(keyword)) ||
                              lastKeyword == '&' ||

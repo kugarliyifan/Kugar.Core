@@ -21,6 +21,10 @@ namespace Kugar.Core.NetCore.Test
         [TestMethod]
     public void TestUrlModifier()
     {
+        var url1 = "http://localhost:6750/product/List?categoryid=1";
+        var m=url1.ToUrlModifier();
+
+
         var url = "https://www.xxx.com/doc/base/infrastructure.html?";
         var newUrl = url.ToUrlModifier().SetAnchor("topoop").RemoveQuery("keyword").ReplaceQuery("pppp", "iii")
             .AddQuery("o1", "ooo");
