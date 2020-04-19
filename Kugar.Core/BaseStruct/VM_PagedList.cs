@@ -188,6 +188,15 @@ namespace Kugar.Core.BaseStruct
                     writer.WritePropertyName("data");
                 }
             }
+#if NETCOREAPP
+            else if (serializer.ContractResolver is DefaultContractResolver d)
+            {
+                isCamelCase = d.NamingStrategy is CamelCaseNamingStrategy;
+
+                writer.WritePropertyName(d.NamingStrategy?.GetPropertyName("data",true) ?? "Data");
+            }
+#endif
+
             else
             {
                 writer.WritePropertyName("Data");

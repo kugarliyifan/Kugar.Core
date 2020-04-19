@@ -43,7 +43,7 @@
     <DocumentationFile>..\bin\Kugar.Core.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>latest</LangVersion>
-    <IntermediateOutputPath>C:\Users\ADMINI~1\AppData\Local\Temp\vsC7D2.tmp\x86\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\kugar\AppData\Local\Temp\vs8C3C.tmp\x86\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,7 +55,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
-    <IntermediateOutputPath>C:\Users\ADMINI~1\AppData\Local\Temp\vsC7D2.tmp\x86\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\kugar\AppData\Local\Temp\vs8C3C.tmp\x86\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -76,7 +76,7 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <Optimize>false</Optimize>
-    <IntermediateOutputPath>C:\Users\ADMINI~1\AppData\Local\Temp\vsC7D2.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\kugar\AppData\Local\Temp\vs8C3C.tmp\Debug\</IntermediateOutputPath>
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>..\bin\Kugar.Core.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
@@ -96,7 +96,7 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <IntermediateOutputPath>C:\Users\ADMINI~1\AppData\Local\Temp\vsC7D2.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\kugar\AppData\Local\Temp\vs8C3C.tmp\Release\</IntermediateOutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>

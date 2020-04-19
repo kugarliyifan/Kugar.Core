@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Kugar.Core.Configuration;
+using Kugar.Core.ExtMethod;
 
 namespace Kugar.Core.Log
 {
@@ -53,6 +55,55 @@ namespace Kugar.Core.Log
         private bool _isErrorEnable = true;
 
         private bool _isDebugEnable = true;
+
+        public LoggerBase()
+        {
+            var loggerLevel = CustomConfigManager.Default["Logging:LogLevel:KugarLogger"].IfEmptyOrWhileSpace("Trace").ToLower();
+
+            switch (loggerLevel)
+            {
+                case "trace":
+                {
+                    IsTraceEnable = true;
+                    IsWarnEnable = true;
+                    IsDebugEnable = true;
+                    IsErrorEnable = true;
+                    break;
+                }
+                case "debug":
+                {
+                    IsTraceEnable = false;
+                    IsDebugEnable = true;
+                    IsWarnEnable = true;
+                    IsErrorEnable = true;
+                    break;
+                }
+                case "warn":
+                {
+                    IsTraceEnable = true;
+                    IsWarnEnable = true;
+                    IsDebugEnable = true;
+                    IsErrorEnable = true;
+                    break;
+                }
+                case "error":
+                {
+                    IsTraceEnable = false;
+                    IsWarnEnable = false;
+                    IsDebugEnable = false;
+                    IsErrorEnable = true;
+                    break;
+                }
+                default:
+                {
+                    IsTraceEnable = true;
+                    IsWarnEnable = true;
+                    IsDebugEnable = true;
+                    IsErrorEnable = true;
+                    break;
+                }
+            }
+        }
 
         public void Debug(string message, KeyValuePair<string, object>[] extData = null)
         {
