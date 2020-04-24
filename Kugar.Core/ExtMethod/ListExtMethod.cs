@@ -9,10 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Kugar.Core.BaseStruct;
 
-#if NET45
-  using Kugar.Core.Linq;    
-#endif
-
 
 namespace Kugar.Core.ExtMethod
 {
@@ -1059,19 +1055,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-#if NET45
-/// <summary>
-/// 查询动态查询表达式
-/// </summary>
-/// <typeparam name="T"></typeparam>
-/// <param name="src"></param>
-/// <param name="query">动态的查询表达式列表</param>
-/// <returns></returns>
-        public static IQueryable<T> Where<T>(this IQueryable<T> src,params DynamicLinqQuery[] query) where T:class
-        {
-            return DynamicLinqQueryBuilder.Build(src, query);
-        }
-#endif
+
     }
 
     public static class IListExtMethod

@@ -44,7 +44,6 @@ namespace Kugar.Core.BaseStruct
             this.PageSize = info.GetInt32("PageSize");
             this.TotalCount = info.GetInt32("TotalCount");
             this.Data = (T[])info.GetValue("Data", typeof(T[]));
-
         }
 
         public VM_PagedList(IEnumerable<T> data, int pageIndex = 1, int pageSize = 10, int totalCount = 0)
@@ -152,6 +151,7 @@ namespace Kugar.Core.BaseStruct
             info.AddValue("PageSize", PageSize);
             info.AddValue("TotalCount", TotalCount);
             info.AddValue("Data", Data.ToArrayEx());
+            info.AddValue("PageCount",PageCount);
         }
 
         public static VM_PagedList<T> Empty(int pageIndex, int pageSize)
@@ -169,7 +169,8 @@ namespace Kugar.Core.BaseStruct
             "Data",
             "PageIndex",
             "PageSize",
-            "TotalCount"
+            "TotalCount",
+            "PageCount"
         };
 
 
@@ -178,21 +179,25 @@ namespace Kugar.Core.BaseStruct
         {
             writer.WriteStartObject();
 
-            var isCamelCase = false;
+            //var isCamelCase = false;
+            
+            var c = serializer.ContractResolver as DefaultContractResolver;
 
-            if (serializer.ContractResolver is CamelCasePropertyNamesContractResolver  c)
-            {
-                isCamelCase = true;
-                //if (c.NamingStrategy.ProcessDictionaryKeys == true)
-                {
-                    writer.WritePropertyName("data");
-                }
-            }
-            else
-            {
-                writer.WritePropertyName("Data");
-            }
+            //if (serializer.ContractResolver is CamelCasePropertyNamesContractResolver)
+            //{
+            //    c = serializer.ContractResolver as CamelCasePropertyNamesContractResolver;
+            //    isCamelCase = true;
+            //    //if (c.NamingStrategy.ProcessDictionaryKeys == true)
+            //    {
+            //        writer.WritePropertyName("data");
+            //    }
+            //}
+            //else
+            //{
+            //    writer.WritePropertyName("Data");
+            //}
 
+            writer.WritePropertyName(c?.GetResolvedPropertyName("Data")??"Data");
             
             writer.WriteStartArray();
             
@@ -208,9 +213,10 @@ namespace Kugar.Core.BaseStruct
             writer.WriteEndArray();
 
             
-            writer.WriteProperty(isCamelCase? "pageIndex" : "PageIndex", (int)value.FastGetValue("PageIndex"));
-            writer.WriteProperty(isCamelCase ? "pageSize": "PageSize", (int)value.FastGetValue("PageSize"));
-            writer.WriteProperty(isCamelCase ? "totalCount": "TotalCount", (int)value.FastGetValue("TotalCount"));
+            writer.WriteProperty(c?.GetResolvedPropertyName("PageIndex") ??"PageIndex", (int)value.FastGetValue("PageIndex"));
+            writer.WriteProperty(c?.GetResolvedPropertyName("PageSize") ??"PageSize", (int)value.FastGetValue("PageSize"));
+            writer.WriteProperty(c?.GetResolvedPropertyName("TotalCount") ??"TotalCount", (int)value.FastGetValue("TotalCount"));
+            writer.WriteProperty(c?.GetResolvedPropertyName("PageCount")??"PageCount", (int) value.FastGetValue("PageCount"));
 
             var extProperties = _cacheTypeProperties.GetOrAdd(value.GetType(), getExtPropertyNames);
 
@@ -218,7 +224,8 @@ namespace Kugar.Core.BaseStruct
             {
                 foreach (var extProperty in extProperties.ExtProperties)
                 {
-                    writer.WritePropertyName(extProperty.Name);
+                    writer.WritePropertyName(c?.GetResolvedPropertyName(extProperty.Name));
+
                     serializer.Serialize(writer, value.GetPropertyValue(extProperty.Name));
                     //writer.WriteProperty(extProperty.Name, value.FastGetValue(extProperty.Name));
                 }

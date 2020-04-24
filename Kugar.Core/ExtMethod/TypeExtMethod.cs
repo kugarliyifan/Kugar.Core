@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -466,6 +467,26 @@ namespace Kugar.Core.ExtMethod
             }
 
             return level;
+        }
+
+        /// <summary>
+        /// 从DescriptionAttribute中获取注释,如果未定义,这返回defaultValue参数的值
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static string GetMemberDescription(this MemberInfo member,string defaultValue="")
+        {
+            var attr = member.GetCustomAttribute<DescriptionAttribute>();
+
+            if (attr!=null)
+            {
+                return attr.Description;
+            }
+            else
+            {
+                return defaultValue;
+            }
         }
 
         #region "定义格式化委托"

@@ -439,7 +439,7 @@ namespace Kugar.Core.MultiThread
     {
         private CallBackBlock<EventArgs> _func = null;
 
-        public SoftDogServerForInstanceMethod(string name, int timeout, CallBackBlock<EventArgs> func)
+        public SoftDogServerForInstanceMethod(string name, int timeout, CallbackTimer.CallbackBlock<EventArgs> func)
             : base(name, timeout)
     	{
             _func = func;
