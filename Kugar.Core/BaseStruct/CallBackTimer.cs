@@ -280,17 +280,20 @@ namespace Kugar.Core.BaseStruct
         {
             internal bool _isDisposed;
             //private CallbackBlockPool _pool = null;
+            
 
             internal void PreCall(WaitCallback callbackAction, object param, int leftTime)
             {
                 CallbackAction = callbackAction;
                 Param = param;
                 _leftTime = leftTime;
+                _orgTime = leftTime;
             }
 
             internal WaitCallback CallbackAction;
             internal object Param;
             internal int _leftTime;
+            private int _orgTime;
 
             internal bool IsStop;
 
@@ -299,6 +302,10 @@ namespace Kugar.Core.BaseStruct
                 return Interlocked.Add(ref _leftTime,-1*time)<=0;
             }
 
+            public void Reset()
+            {
+                Interlocked.Exchange(ref _leftTime, _orgTime);
+            }
             
             public void Stop()
             {
@@ -553,6 +560,7 @@ namespace Kugar.Core.BaseStruct
     {
         void Stop();
 
+        void Reset();
     }
 
 

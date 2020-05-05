@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Kugar.Core.BaseStruct
 {
-    public class AwaiterBase<T> : IAwaitable<T>, IAwaiter<T>
+    public class AwaiterBase<T> : IAwaitable<T>, IAwaiter<T>, INotifyCompletion
     {
         private Action _continuation = null;
         private bool _isCompleted = false;
@@ -62,8 +62,11 @@ namespace Kugar.Core.BaseStruct
                     //if (sameStackFrame)
                     //    _syncContext.Post(invoke, _continuation);
                     //else
-                    SynchronizationContext.SetSynchronizationContext(_syncContext);
+                    //SynchronizationContext.SetSynchronizationContext(_syncContext);
 
+                    //var c = (SendOrPostCallback) state;
+
+                    _syncContext.Send((b) => { ((Action)state)(); }, state);
 
                     
                     //_syncContext.Send(invoke, _continuation);
@@ -78,11 +81,14 @@ namespace Kugar.Core.BaseStruct
 
                     //_syncContext = null;
                 }
-
-                if (state !=null && state is Action tmp)
+                else
                 {
-                    tmp();
+                    if (state != null && state is Action tmp)
+                    {
+                        tmp();
+                    }
                 }
+                
             }
             catch (Exception)
             {
@@ -158,8 +164,9 @@ namespace Kugar.Core.BaseStruct
     {
         private ICallbackBlock block = null;
         private EventHandler _onTimeoutCallback = null;
+        private bool _whenTimeoutThrowException = true;
 
-        public TimeoutAwaiter(int timeout,EventHandler onTimeoutCallback=null) : base()
+        public TimeoutAwaiter(int timeout,EventHandler onTimeoutCallback=null, bool whenTimeoutThrowException = true) : base()
         {
             if (timeout>0)
             {
@@ -167,13 +174,7 @@ namespace Kugar.Core.BaseStruct
             }
 
             _onTimeoutCallback = onTimeoutCallback;
-        }
-
-        public override T GetResult()
-        {
-            block.Stop();
-            
-            return base.GetResult();
+            _whenTimeoutThrowException = whenTimeoutThrowException;
         }
 
         private void timeoutCallback(object state)
@@ -190,14 +191,101 @@ namespace Kugar.Core.BaseStruct
                 }
                 finally
                 {
-                    base.SetError(new TimeoutException());
+                    block.Stop();
+                    block.Dispose();
+
+                    if (_whenTimeoutThrowException)
+                    {
+                        base.SetError(new TimeoutException());
+                    }
+                    else
+                    {
+                        IsCompleted = true;
+                    }
                 }
             }
         }
 
         public override void SetResult(T result, bool isCompleted = true)
         {
+            if (isCompleted)
+            {
+                block?.Dispose();
+            }
+            
+            base.SetResult(result, isCompleted);
+
+        }
+
+        public override void SetError(Exception error)
+        {
             block?.Dispose();
+            base.SetError(error);
+
+        }
+    }
+
+    /// <summary>
+    /// 使用滑动的超时机制,最后一次调用SetResult后的timeout毫秒后,触发超时机制
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class SlideTimeoutAwaiter<T> : AwaiterBase<T>
+    {
+        private ICallbackBlock block = null;
+        private EventHandler _onTimeoutCallback = null;
+        private bool _whenTimeoutThrowException = true;
+
+        public SlideTimeoutAwaiter(int timeout, EventHandler onTimeoutCallback = null, bool whenTimeoutThrowException=true) : base()
+        {
+            if (timeout > 0)
+            {
+                block = CallbackTimer.Default.Call(timeout, timeoutCallback);
+            }
+
+            _onTimeoutCallback = onTimeoutCallback;
+            _whenTimeoutThrowException = whenTimeoutThrowException;
+        }
+
+        private void timeoutCallback(object state)
+        {
+            if (!IsCompleted)
+            {
+
+
+                try
+                {
+                    _onTimeoutCallback?.Invoke(this, EventArgs.Empty);
+                }
+                catch (Exception)
+                {
+
+                }
+                finally
+                {
+                    if (_whenTimeoutThrowException)
+                    {
+                        base.SetError(new TimeoutException());
+                    }
+                    else
+                    {
+                        IsCompleted = true;
+                        //_onTimeoutCallback?.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        public override void SetResult(T result, bool isCompleted = true)
+        {
+            if (isCompleted)
+            {
+                block?.Dispose();
+            }
+            else
+            {
+                block?.Reset();
+            }
+
             base.SetResult(result, isCompleted);
 
         }
