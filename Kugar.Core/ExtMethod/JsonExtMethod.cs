@@ -11,7 +11,7 @@ namespace Kugar.Core.ExtMethod
 {
     public static class JsonExtMethod
     {
-        public static long GetLong(this JObject src, string propertyName, long defaultValue = 0L)
+        public static long GetLong(this JObject src, string propertyName, long defaultValue = 0L, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -20,7 +20,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 return (long)v;
             }
@@ -30,7 +30,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static string GetString(this JObject src, string propertyName, string defaultValue = "")
+        public static string GetString(this JObject src, string propertyName, string defaultValue = "", StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -39,7 +39,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 return v.ToStringEx();
             }
@@ -49,7 +49,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static int GetInt(this JObject src, string propertyName, int defaultValue = 0)
+        public static int GetInt(this JObject src, string propertyName, int defaultValue = 0,StringComparison comparison= StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -58,7 +58,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName,comparison, out v))
             {
                 if (v.Type== JTokenType.Integer)
                 {
@@ -73,7 +73,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static JObject GetJObject(this JObject src, string propertyName)
+        public static JObject GetJObject(this JObject src, string propertyName, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -82,7 +82,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Object)
                 {
@@ -97,7 +97,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static JArray GetJArray(this JObject src, string propertyName)
+        public static JArray GetJArray(this JObject src, string propertyName, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -106,7 +106,7 @@ namespace Kugar.Core.ExtMethod
 
              JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Array)
                 {
@@ -121,7 +121,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static IEnumerable<JObject> GetJObjectArray(this JObject src, string propertyName)
+        public static IEnumerable<JObject> GetJObjectArray(this JObject src, string propertyName, StringComparison comparison = StringComparison.Ordinal)
         {
             var array = GetJArray(src, propertyName);
 
@@ -138,6 +138,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
+#if !NETCOREAPP
         [Obsolete("函数名错误,请使用GetJObjectArray函数")]
         public static IEnumerable<JObject> GetJOjbectArray(this JObject src, string propertyName)
         {
@@ -155,8 +156,10 @@ namespace Kugar.Core.ExtMethod
                 }
             }
         }
+#endif
 
-        public static float GetFloat(this JObject src, string propertyName, float defaultValue = 0)
+
+        public static float GetFloat(this JObject src, string propertyName, float defaultValue = 0, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -165,7 +168,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Float)
                 {
@@ -180,7 +183,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static double GetDouble(this JObject src, string propertyName, double defaultValue = 0)
+        public static double GetDouble(this JObject src, string propertyName, double defaultValue = 0, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -189,7 +192,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type==JTokenType.Float)
                 {
@@ -203,7 +206,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static decimal GetDecimal(this JObject src, string propertyName, decimal defaultValue = 0)
+        public static decimal GetDecimal(this JObject src, string propertyName, decimal defaultValue = 0, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -212,7 +215,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Object)
                 {
@@ -235,9 +238,9 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static T GetIntEnum<T>(this JObject src, string propertyName, T defaultValue)
+        public static T GetIntEnum<T>(this JObject src, string propertyName, T defaultValue, StringComparison comparison = StringComparison.Ordinal)
         {
-            var v = GetInt(src, propertyName, (int)Convert.ToInt32(defaultValue));
+            var v = GetInt(src, propertyName, (int)Convert.ToInt32(defaultValue), comparison);
 
             if (Enum.IsDefined(typeof(T), v))
             {
@@ -249,7 +252,7 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static DateTime GetDateTime(this JObject src, string propertyName, DateTime defaultValue)
+        public static DateTime GetDateTime(this JObject src, string propertyName, DateTime defaultValue, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -258,7 +261,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Date)
                 {
@@ -269,7 +272,7 @@ namespace Kugar.Core.ExtMethod
 
         }
 
-        public static DateTime GetDateTime(this JObject src, string propertyName,string format,DateTime defaultValue)
+        public static DateTime GetDateTime(this JObject src, string propertyName,string format,DateTime defaultValue, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -278,7 +281,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Date)
                 {
@@ -292,7 +295,7 @@ namespace Kugar.Core.ExtMethod
             return defaultValue;
         }
 
-        public static DateTime? GetDateTimeNullable(this JObject src, string propertyName, DateTime? defaultValue=null)
+        public static DateTime? GetDateTimeNullable(this JObject src, string propertyName, DateTime? defaultValue=null, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -301,7 +304,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Date)
                 {
@@ -312,7 +315,7 @@ namespace Kugar.Core.ExtMethod
 
         }
 
-        public static DateTime? GetDateTimeNullable(this JObject src, string propertyName, string format, DateTime? defaultValue=null)
+        public static DateTime? GetDateTimeNullable(this JObject src, string propertyName, string format, DateTime? defaultValue=null, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -321,7 +324,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type == JTokenType.Date)
                 {
@@ -335,7 +338,7 @@ namespace Kugar.Core.ExtMethod
             return defaultValue;
         }
 
-        public static bool GetBool(this JObject src, string propertyName, bool defaultValue = false)
+        public static bool GetBool(this JObject src, string propertyName, bool defaultValue = false, StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {
@@ -344,7 +347,7 @@ namespace Kugar.Core.ExtMethod
 
             JToken v;
 
-            if (src.TryGetValue(propertyName, out v))
+            if (src.TryGetValue(propertyName, comparison, out v))
             {
                 if (v.Type==JTokenType.Boolean)
                 {
@@ -359,11 +362,11 @@ namespace Kugar.Core.ExtMethod
             }
         }
 
-        public static T GetValue<T>(this JObject src, string propertyName,T defaultValue=default(T))
+        public static T GetValue<T>(this JObject src, string propertyName,T defaultValue=default(T), StringComparison comparison = StringComparison.Ordinal)
         {
             JToken token = null;
 
-            if (src.TryGetValue(propertyName,out token))
+            if (src.TryGetValue(propertyName, comparison,out token))
             {
                 return token.ToObject<T>();
             }
@@ -372,6 +375,7 @@ namespace Kugar.Core.ExtMethod
                 return defaultValue;
             }
         }
+
 
         public static string ToStringEx(this JObject src, Formatting formatting = Formatting.Indented)
         {

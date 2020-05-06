@@ -602,37 +602,11 @@ namespace Kugar.Core.BaseStruct
             {
                 var s = (JObject)serializer.Deserialize(reader);
 
-                var isCamel = serializer.ContractResolver is CamelCasePropertyNamesContractResolver;
-
-
-                var isSuccess = s.GetBool(isCamel? "isSuccess" : "IsSuccess");
+                var isSuccess =s.GetBool("isSuccess",false,StringComparison.CurrentCultureIgnoreCase);
                 Type type = null;
                 object returnData = null;
                 Exception error = null;
-                var typeName = s.GetString("ReturnDataType");
 
-                //if (!string.IsNullOrWhiteSpace(typeName) )
-                //{
-                //    //if (typeName.Contains("Anonymous"))
-                //    //{
-                //    //    type = _jObjectType;
-                //    //}
-                //    //else if (string.IsNullOrWhiteSpace(typeName))
-                //    //{
-                //    //    type = Type.GetType(typeName, true);
-                //    //}
-                //    //else 
-                //    if (objectType.IsGenericType)
-                //    {
-                //        type=objectType.GetGenericArguments()[0];
-                //    }
-                //    else
-                //    {
-                        
-                //        type = _objectType;
-                //    }
-                //}
-                //else 
                 if (objectType.IsGenericType)
                 {
                     type = objectType.GetGenericArguments()[0];
@@ -649,9 +623,9 @@ namespace Kugar.Core.BaseStruct
                 
                 if (isSuccess)
                 {
-                    var returnDataJson = s.GetValue(isCamel ? "returnData" : "ReturnData");
+                    var returnDataJson = s.GetValue("returnData", StringComparison.CurrentCultureIgnoreCase);
 
-                    if (returnDataJson.Type== JTokenType.Null)
+                    if (returnDataJson==null || returnDataJson.Type== JTokenType.Null)
                     {
                         returnData = null;
                     }
@@ -668,31 +642,21 @@ namespace Kugar.Core.BaseStruct
                 else
                 {
                     returnData = type.GetDefaultValue();
-                    error = (Exception)serializer.Deserialize(s.GetValue(isCamel ? "error": "Error").CreateReader(), typeof(Exception));
+
+                    var errorJson = s.GetValue("error", StringComparison.CurrentCultureIgnoreCase);
+
+                    if (errorJson!=null)
+                    {
+                        var errorReader = errorJson.CreateReader();
+                        error = (Exception)serializer.Deserialize(errorReader, typeof(Exception));
+                        errorReader.Close();
+                    }
                 }
 
-                var returnCode = s.GetInt(isCamel ? "returnCode": "ReturnCode");
-                var message = s.GetString(isCamel ? "message": "Message");
-
-                //var isSuccess = (bool)JToken.ReadFrom(reader);
-
-                //var type = objectType.GetGenericArguments()[0];
-                //var returnData = serializer.Deserialize(reader, type);
-                //var error = serializer.Deserialize<Exception>(reader);
-                //var message = reader.ReadAsString();
-                //var returnCode = reader.ReadAsInt32().GetValueOrDefault();
-
-                //return objectType.Create(isSuccess, returnData, message, returnCode, error);
-
-                //Fasterflect.ConstructorExtensions.CreateInstance()
+                var returnCode = s.GetInt("returnCode",comparison:StringComparison.CurrentCultureIgnoreCase);
+                var message = s.GetString("message", comparison: StringComparison.CurrentCultureIgnoreCase);
 
                 var value = Activator.CreateInstance(objectType, isSuccess, returnData, message, returnCode, error);
-
-                //value.FastSetValue("IsSuccess", isSuccess);
-                //value.FastSetValue("ReturnData", returnData);
-                //value.FastSetValue("Error", error);
-                //value.FastSetValue("Message", message);
-                //value.FastSetValue("ReturnCode", returnCode);
 
                 return value;
             }
