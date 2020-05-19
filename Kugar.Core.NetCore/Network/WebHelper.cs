@@ -681,9 +681,14 @@ namespace Kugar.Core.Network
                 }
                 catch (Exception e)
                 {
-                    var content = await resp.Content.ReadAsStringAsync();
+                    var content = "";
 
-                    LoggerManager.Default.Debug("读取错误:" + content);
+                    if (resp==null)
+                    {
+                        content = await resp.Content.ReadAsStringAsync();
+                    }
+
+                    LoggerManager.Default.Debug("读取错误:" + (string.IsNullOrWhiteSpace(content)?e.Message:content));
                     
                     throw new HttpWebGetterException(_requestMsg.RequestUri.ToStringEx(),e,content);
                 }

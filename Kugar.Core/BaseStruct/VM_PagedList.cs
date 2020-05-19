@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -12,20 +13,62 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Fasterflect;
 using Newtonsoft.Json.Serialization;
+using NPOI.SS.Formula.Functions;
 
 namespace Kugar.Core.BaseStruct
 {
-    [JsonConverter(typeof(VM_PagedList_JsonConverter))]
-    public interface IPagedList<out T>
+    //[JsonConverter(typeof(VM_PagedList_JsonConverter))]
+    /// <summary>
+    /// 分页参数信息
+    /// </summary>
+    public interface IPagedInfo
     {
+        /// <summary>
+        /// 页码
+        /// </summary>
+        [DisplayName("页码"),Description("页码")]
+        int PageIndex { set; get; }
+
+        /// <summary>
+        /// 每页大小
+        /// </summary>
+        [DisplayName("每页大小"), Description("每页大小")]
+        int PageSize { set; get; }
+
+        /// <summary>
+        /// 总记录数
+        /// </summary>
+        [DisplayName("总记录数"), Description("总记录数")]
+        int TotalCount { set; get; }
+
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        [DisplayName("总页数"), Description("总页数")]
+        int PageCount { get; }
+
+        /// <summary>
+        /// 是否有数据
+        /// </summary>
+        /// <returns></returns>
+        bool HasData();
+    }
+
+    [JsonConverter(typeof(VM_PagedList_JsonConverter))]
+    public interface IPagedList<out T>: IPagedInfo
+    {
+        /// <summary>
+        /// 获取分页后的数据
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<T> GetData();
 
-        int PageIndex { set; get; }
-        int PageSize { set; get; }
-        int TotalCount { set; get; }
-        int PageCount { get; }
+        //int PageIndex { set; get; }
+        //int PageSize { set; get; }
+        //int TotalCount { set; get; }
+        //int PageCount { get; }
         IPagedList<TExport> Cast<TExport>(Func<T,TExport> castFunc);
-        bool HasData();
+        //bool HasData();
         T[] ToArray();
     }
 

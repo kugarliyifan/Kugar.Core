@@ -286,35 +286,46 @@ namespace Kugar.Core.BaseStruct
             {
                 CallbackAction = callbackAction;
                 Param = param;
-                _leftTime = leftTime;
+                _leftTime =new ThreadLocal<int>(()=> leftTime);
                 _orgTime = leftTime;
             }
 
-            internal WaitCallback CallbackAction;
-            internal object Param;
-            internal int _leftTime;
+            private WaitCallback CallbackAction;
+            private object Param;
+            private ThreadLocal<int> _leftTime;
             private int _orgTime;
 
             internal bool IsStop;
 
             public bool DecreaseTime(int time)
             {
-                return Interlocked.Add(ref _leftTime,-1*time)<=0;
+                _leftTime.Value -= time;
+
+                return _leftTime.Value <= 0;
+
+                //return Interlocked.Add(ref _leftTime,-1*time)<=0;
             }
 
             public void Reset()
             {
-                Interlocked.Exchange(ref _leftTime, _orgTime);
+                _leftTime.Value = _orgTime;
+                //Interlocked.Exchange(ref _leftTime, _orgTime);
             }
             
             public void Stop()
             {
                 //lock (this)
                 {
-                    Interlocked.Exchange(ref _leftTime, int.MaxValue);
+                    _leftTime.Value = int.MaxValue;
+                    //Interlocked.Exchange(ref _leftTime, int.MaxValue);
                     //_leftTime = int.MaxValue;
                     IsStop = true;
                 }
+            }
+
+            public void Invoke()
+            {
+                CallbackAction(Param);
             }
 
 
@@ -547,7 +558,7 @@ namespace Kugar.Core.BaseStruct
             {
                 var tmp = (CallbackBlock) state;
 
-                tmp.CallbackAction(tmp.Param);
+                tmp.Invoke();
 
                 tmp.Dispose();
             }

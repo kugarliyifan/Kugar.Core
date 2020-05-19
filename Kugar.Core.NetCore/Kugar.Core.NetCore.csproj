@@ -4,12 +4,13 @@
     <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>Kugar.Core</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.104</Version>
+    <Version>1.2.110</Version>
     <Authors>Kugar</Authors>
     <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PackageReleaseNotes>1.处理VM_PagedList的属性大小写问题
-2.增加一个SlideTimeoutAwaiter的滑动超时Awaiter</PackageReleaseNotes>
+    <PackageReleaseNotes>1.修复awaiter的问题
+2.增加IPagedInfo,
+3.WebHelper在获取无法访问网站时候,会抛出错误</PackageReleaseNotes>
     <Description>一个提供基础类库和扩展函数的类库</Description>
     <RepositoryUrl>https://github.com/kugarliyifan/Kugar.Core</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kugarliyifan/Kugar.Core</PackageProjectUrl>

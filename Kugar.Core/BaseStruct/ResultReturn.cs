@@ -643,13 +643,17 @@ namespace Kugar.Core.BaseStruct
                 {
                     returnData = type.GetDefaultValue();
 
-                    var errorJson = s.GetValue("error", StringComparison.CurrentCultureIgnoreCase);
+                    var errorJson = s.GetJObject("error", StringComparison.CurrentCultureIgnoreCase);
 
                     if (errorJson!=null)
                     {
-                        var errorReader = errorJson.CreateReader();
-                        error = (Exception)serializer.Deserialize(errorReader, typeof(Exception));
-                        errorReader.Close();
+                        error = new Exception(errorJson.GetString("message",comparison:StringComparison.CurrentCultureIgnoreCase));
+
+
+
+                        //var errorReader = errorJson.CreateReader();
+                        //error = (Exception)serializer.Deserialize(errorReader, typeof(Exception));
+                        //errorReader.Close();
                     }
                 }
 
