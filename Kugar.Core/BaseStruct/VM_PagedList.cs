@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Fasterflect;
 using Newtonsoft.Json.Serialization;
-using NPOI.SS.Formula.Functions;
 
 namespace Kugar.Core.BaseStruct
 {
