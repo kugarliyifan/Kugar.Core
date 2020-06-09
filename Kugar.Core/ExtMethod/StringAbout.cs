@@ -51,7 +51,7 @@ namespace Kugar.Core.ExtMethod
 
             for (int i = startIndex; i < srcStr.Length; i++)
             {
-                char endChar = (char) 0;
+                char endChar = (char)0;
                 if (!isBegin)
                 {
 
@@ -72,7 +72,7 @@ namespace Kugar.Core.ExtMethod
                 {
                     if (i != srcStr.Length - 1)
                     {
-                        endChar = srcStr[i];
+                        endChar = srcStr[i + 1];
                     }
 
                     if (endChecker(srcStr[i], endChar))
@@ -83,8 +83,7 @@ namespace Kugar.Core.ExtMethod
                 }
             }
 
-            return srcStr.Substring(beginIndex, srcStr.Length - beginIndex);
-
+            return srcStr.Substring(beginIndex, endIndex - beginIndex + 1);
         }
 
 
