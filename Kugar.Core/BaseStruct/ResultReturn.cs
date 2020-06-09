@@ -448,7 +448,7 @@ namespace Kugar.Core.BaseStruct
     {
         //private static FailResultReturn _defaultValue = new FailResultReturn("");
         public FailResultReturn(Exception error)
-            : base(false, error, string.Empty, 0, null)
+            : base(false, null, string.Empty, 0, error)
         {
         }
 
