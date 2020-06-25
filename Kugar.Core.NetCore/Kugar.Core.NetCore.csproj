@@ -12,7 +12,15 @@
     <Description>一个提供基础类库和扩展函数的类库</Description>
     <RepositoryUrl>https://github.com/kugarliyifan/Kugar.Core</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kugarliyifan/Kugar.Core</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin\</OutputPath>
