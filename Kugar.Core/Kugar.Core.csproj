@@ -14,7 +14,16 @@
 		<PackageReleaseNotes>1.修复awaiter的问题
 2.增加IPagedInfo,
 3.WebHelper在获取无法访问网站时候,会抛出错误</PackageReleaseNotes>
-	</PropertyGroup>
+	
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <OutputPath>..\bin</OutputPath>
 	  <DocumentationFile>..\bin\Kugar.Core.xml</DocumentationFile>
