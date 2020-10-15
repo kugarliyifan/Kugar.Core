@@ -42,7 +42,13 @@ namespace Kugar.Core.BaseStruct
         /// <summary>
         ///     如果函数有返回值,则设置该属性
         /// </summary>
-        Object ReturnData { set; get; }
+        object ReturnData { set; get; }
+    }
+
+    public interface IResultReturn<out T> :IEmptyResultReturn
+    {
+        T GetResultData();
+
     }
 
     [JsonConverter(typeof(ResultReturnConverter))]
@@ -228,7 +234,7 @@ namespace Kugar.Core.BaseStruct
 
     [JsonConverter(typeof(ResultReturnConverter))]
     //[Serializable]
-    public class ResultReturn<T> /*:ISerializable*/
+    public class ResultReturn<T> : IResultReturn<T>
     {
         private string _message = string.Empty;
         protected T _returnData = default(T) ;
@@ -346,6 +352,10 @@ namespace Kugar.Core.BaseStruct
         //    info.AddValue("Error", Error);
         //    info.AddValue("ReturnData", ReturnData);
         //}
+        public T GetResultData()
+        {
+            return ReturnData;
+        }
     }
 
     /// <summary>

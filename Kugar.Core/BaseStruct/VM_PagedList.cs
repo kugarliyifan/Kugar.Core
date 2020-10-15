@@ -200,6 +200,11 @@ namespace Kugar.Core.BaseStruct
         {
             return new VM_PagedList<T>(new T[0], pageIndex, pageSize, 0);
         }
+
+        //public static implicit operator VM_PagedList<T>(IPagedList<T> src)
+        //{
+        //    return (VM_PagedList<T>) src;
+        //}
     }
 
     //[AttributeUsage(AttributeTargets.Class,AllowMultiple = false,Inherited = true)]
