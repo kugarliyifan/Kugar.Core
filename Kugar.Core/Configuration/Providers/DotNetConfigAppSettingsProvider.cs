@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -21,16 +22,42 @@ namespace Kugar.Core.Configuration.Providers
         {
             _path = null;
 
-            
+            Debugger.Break();
 
             try
             {
+#if NETCOREAPP
+                var configname = "";
+                ExeConfigurationFileMap map = new ExeConfigurationFileMap();
+                //configname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "web.config");
+
+                if (!File.Exists(configname))
+                {
+                    configname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.config");
+                }
+
+                if (!File.Exists(configname))
+                {
+                    configname = Path.Combine(Assembly.GetEntryAssembly().Location , $"{Assembly.GetEntryAssembly().GetName().Name}.dll.config");
+
+                    Console.WriteLine(configname);
+                }
+
+                map.ExeConfigFilename = configname;
+
+                configManager = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
+
+#endif
+#if NET45
+                configManager = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+#endif
+
                 //if (System.Web.HttpContext.Current != null && !System.Web.HttpContext.Current.Request.PhysicalPath.Equals(string.Empty))
                 //    configManager = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
                 //else
                 //    configManager = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-                configManager = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             }
             catch (Exception)
             {
@@ -42,12 +69,17 @@ namespace Kugar.Core.Configuration.Providers
       configname=AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
 #endif
 
-#if NETCOREAPP2_0
-                configname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "web.config");
+#if NETCOREAPP 
+                //configname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "web.config");
 
                 if (!File.Exists(configname))
                 {
                     configname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.config");
+                }
+
+                if (!File.Exists(configname))
+                {
+                    configname = $"{Assembly.GetExecutingAssembly().GetName().Name}.dll.config";
                 }
   #endif
 
@@ -117,7 +149,7 @@ namespace Kugar.Core.Configuration.Providers
             //var config = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
 
 
-            if (configManager.AppSettings != null)
+            if (configManager?.AppSettings != null)
             {
                 foreach (KeyValueConfigurationElement c in configManager.AppSettings.Settings)
                 {

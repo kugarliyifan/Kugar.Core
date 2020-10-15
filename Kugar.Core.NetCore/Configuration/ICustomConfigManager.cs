@@ -41,8 +41,11 @@ namespace Kugar.Core.Configuration
 
         static CustomConfigManager()
         {
-            _appSettings = Build("AppSettings",new DotNetConfigAppSettingsProvider());
-            _connSettings = Build("ConnectionSection",new DotNetConfigConnectionSectionProvider());
+
+
+            _appSettings = Build("AppSettings", new DotNetConfigAppSettingsProvider());
+            _connSettings = Build("ConnectionSection", new DotNetConfigConnectionSectionProvider());
+
 
             _defauleManager = new Lazy<CustomConfigManager>(() =>
             {

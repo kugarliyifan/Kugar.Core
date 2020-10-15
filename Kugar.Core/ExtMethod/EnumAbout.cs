@@ -79,7 +79,7 @@ namespace Kugar.Core.ExtMethod
             //return (T)convert.ConvertTo(src, typeof (T));
         }
 
-//#if !NETCOREAPP2_2
+#if !NETCOREAPP2_2 && !NETCOREAPP3_0 && !NETCOREAPP3_1
         /// <summary>
         /// 获取描述信息
         /// </summary>
@@ -106,6 +106,8 @@ namespace Kugar.Core.ExtMethod
             return en.ToString();
         }
 
+#endif
+
         /// <summary>
         /// 获取DisplayNameAttribute中的名称
         /// </summary>
@@ -131,7 +133,6 @@ namespace Kugar.Core.ExtMethod
             }
             return en.ToString();
         }
-        //#endif
 
 
 
