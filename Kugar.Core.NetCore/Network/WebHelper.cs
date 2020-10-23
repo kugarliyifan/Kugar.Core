@@ -107,7 +107,7 @@ namespace Kugar.Core.Network
             private static IHttpClientFactory _httpClientFactory=null;
             private bool _hasChangeContentType = false;
             private Lazy<Dictionary<string, string>>_cookies =new Lazy<Dictionary<string, string>>();
-            
+            private int _retryCount = 1;
 
             private static ServiceProvider _service = null;
             //private static HttpClient
@@ -177,6 +177,23 @@ namespace Kugar.Core.Network
                 //_handler.AllowAutoRedirect = true;
                 //_handler.Credentials = CredentialCache.DefaultCredentials;
                 
+            }
+
+            /// <summary>
+            /// 重试次数，默认为1，即不重试
+            /// </summary>
+            /// <param name="tryCount"></param>
+            /// <returns></returns>
+            public HttpWebGetter RetryCount(int tryCount)
+            {
+                if (tryCount<=0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(tryCount));
+                }
+
+                _retryCount = tryCount;
+
+                return this;
             }
 
             public HttpWebGetter SetCookie(string name, string value)
@@ -266,12 +283,14 @@ namespace Kugar.Core.Network
                 return this;
             }
 
-            public HttpWebGetter SetParamters(Dictionary<string, object> values, bool autoUrlEncoding = true)
+
+
+            public HttpWebGetter SetParameters(Dictionary<string, object> values, bool autoUrlEncoding = true)
             {
                 _values = values;
                 _jsonContent = null;
 
-                if (_values!=null && autoUrlEncoding)
+                if (_values != null && autoUrlEncoding)
                 {
                     var keys = _values.Keys.ToArrayEx();
                     foreach (var key in keys)
@@ -287,14 +306,14 @@ namespace Kugar.Core.Network
 
                 return this;
             }
-            
+
             /// <summary>
             /// 设置一个指定名称和值的参数,使用该方式,则在提交数据的时候,会使用键值对的方式提交
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
             /// <returns></returns>
-            public HttpWebGetter SetParamter(string name, string value,bool autoUrlEncoding=false)
+            public HttpWebGetter SetParameter(string name, string value, bool autoUrlEncoding = false)
             {
                 if (_values == null)
                 {
@@ -306,14 +325,14 @@ namespace Kugar.Core.Network
                 //    value = HttpUtility.UrlEncode(value);
                 //}
 
-                _values.Add(name, autoUrlEncoding?HttpUtility.UrlEncode(value):value);
+                _values.Add(name, autoUrlEncoding ? HttpUtility.UrlEncode(value) : value);
 
                 _jsonContent = null;
 
                 return this;
             }
 
-            public HttpWebGetter SetParamter(string name, FormFile file)
+            public HttpWebGetter SetParameter(string name, FormFile file)
             {
                 if (_values == null)
                 {
@@ -651,6 +670,8 @@ namespace Kugar.Core.Network
                 
                 HttpResponseMessage resp = null;
 
+                retry:
+
                 try
                 {
                     
@@ -659,24 +680,30 @@ namespace Kugar.Core.Network
                         resp = (await client.SendAsync(_requestMsg, cancellationToken.Value)).EnsureSuccessStatusCode();
                     //}
 
-                    var data =await resp.Content.ReadAsByteArrayAsync();
-
+                    var sourceStream =await resp.Content.ReadAsStreamAsync();
+                    byte[] data = null;
 
                     if (resp.Content.Headers.ContentEncoding.Any(x=>x.Contains("gzip")))
                     {
-                        using (GZipStream stream = new GZipStream(new ByteStream(data), CompressionMode.Decompress))
+                        using (GZipStream stream = new GZipStream(sourceStream, CompressionMode.Decompress))
                         {
-                            data = stream.ReadAllBytes();
+                            data =await stream.ReadAllBytesAsync();
                         }
                     }
                     else if (resp.Content.Headers.ContentEncoding.Any(x => x.Contains("deflate")))
                     {
-                        using (DeflateStream stream = new DeflateStream(new ByteStream(data), CompressionMode.Decompress))
+                        using (DeflateStream stream = new DeflateStream(sourceStream, CompressionMode.Decompress))
                         {
-                            data = stream.ReadAllBytes();
+                            data =await stream.ReadAllBytesAsync();
                         }
                     }
-              
+                    else
+                    {
+                        data = await sourceStream.ReadAllBytesAsync();
+                    }
+
+                    _retryCount--;
+
                     return data;
                 }
                 catch (Exception e)
@@ -689,13 +716,49 @@ namespace Kugar.Core.Network
                     }
 
                     LoggerManager.Default.Debug("读取错误:" + (string.IsNullOrWhiteSpace(content)?e.Message:content));
-                    
+                    _retryCount--;
+
+                    if (_retryCount>0)
+                    {
+                        goto retry;
+                    }
+
                     throw new HttpWebGetterException(_requestMsg.RequestUri.ToStringEx(),e,content);
                 }
                 
             }
             
             private static readonly Regex reg_charset = new Regex(@"charset\b\s*=\s*(?<charset>[^""]*)");
+
+            #region 即将删掉的函数
+
+            [Obsolete]
+            public HttpWebGetter SetParamters(Dictionary<string, object> values, bool autoUrlEncoding = true)
+            {
+                return SetParameters(values, autoUrlEncoding);
+            }
+
+            /// <summary>
+            /// 设置一个指定名称和值的参数,使用该方式,则在提交数据的时候,会使用键值对的方式提交
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="value"></param>
+            /// <returns></returns>
+            [Obsolete]
+            public HttpWebGetter SetParamter(string name, string value, bool autoUrlEncoding = false)
+            {
+                return SetParameter(name, value, autoUrlEncoding);
+            }
+
+            [Obsolete]
+            public HttpWebGetter SetParamter(string name, FormFile file)
+            {
+                return SetParameter(name, file);
+            }            
+
+            #endregion
+
+
 
             public class HttpWebGetterException : Exception
             {
