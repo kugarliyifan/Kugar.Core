@@ -22,7 +22,7 @@ namespace Kugar.Core.Configuration.Providers
         {
             _path = null;
 
-            Debugger.Break();
+            //Debugger.Break();
 
             try
             {

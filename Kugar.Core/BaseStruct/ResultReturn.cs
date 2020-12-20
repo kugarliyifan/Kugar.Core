@@ -583,6 +583,13 @@ namespace Kugar.Core.BaseStruct
             }
             else
             {
+                writer.WriteStartObject();
+
+                writer.WriteProperty(c?.GetResolvedPropertyName("Message") ?? "Message" , error.Message);
+                writer.WriteProperty(c?.GetResolvedPropertyName("ErrorType") ?? "ErrorType", error.GetType().FullName);
+                writer.WriteProperty(c?.GetResolvedPropertyName("MethodName") ?? "MethodName", error.TargetSite.Name);
+
+                writer.WriteEndObject();
                 //writer.WriteValue(error);
                 serializer.Serialize(writer, error);
             }
