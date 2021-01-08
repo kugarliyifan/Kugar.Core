@@ -802,5 +802,321 @@ namespace Kugar.Core.ExtMethod
         }
 
         #endregion
+        
+        #if NETCOREAPP
+        
+
+        #region WriterExt
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, string value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, int? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, long? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, float? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, bool? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, ushort? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, byte? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, decimal? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, DateTimeOffset? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, TimeSpan? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, Uri value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, object value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, byte[] value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, Guid? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, DateTime? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, sbyte? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, char? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, short? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, double? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, ulong? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, uint? value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, TimeSpan value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, ulong value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, float value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, double value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, short value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, ushort value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, char value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, sbyte value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, decimal value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, DateTime value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, Guid value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, DateTimeOffset value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, byte value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, bool value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, long value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, uint value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        public static async Task<JsonWriter>  WritePropertyAsync(this JsonWriter writer, string propertyName, int value)
+        {
+            await writer.WritePropertyNameAsync(propertyName);
+            await writer.WriteValueAsync(value);
+
+            return writer;
+        }
+
+        #endregion
+        
+        #endif
+                
     }
+    
 }
