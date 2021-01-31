@@ -29,8 +29,29 @@ namespace Kugar.Core.ExtMethod
                 return defaultValue;
             }
         }
+        
+        
+        public static string GetString(this JObject src, string propertyName, string defaultValue = "")
+        {
+            if (!src.HasValues)
+            {
+                return defaultValue;
+            }
 
-        public static string GetString(this JObject src, string propertyName, string defaultValue = "", StringComparison comparison = StringComparison.Ordinal)
+            JToken v;
+
+            if (src.TryGetValue(propertyName, StringComparison.Ordinal, out v))
+            {
+                return v.ToStringEx();
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
+
+        public static string GetString(this JObject src, string propertyName, string defaultValue  , StringComparison comparison = StringComparison.Ordinal)
         {
             if (!src.HasValues)
             {

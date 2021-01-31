@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kugar.Core.BaseStruct;
 using Kugar.Core.ExtMethod;
+using Kugar.Core.Log;
 using QRCoder;
 
 namespace Kugar.Core.Images
@@ -99,10 +100,27 @@ namespace Kugar.Core.Images
 
             if (isWatchFileModify)
             {
-                _wather = new FileSystemWatcher(templatePath);
-                _wather.EnableRaisingEvents = true;
-                _wather.Changed += wather_changed;
+                var dir = Path.GetDirectoryName(templatePath);
 
+                if (Directory.Exists(dir))
+                {
+                    try
+                    {
+                        _wather = new FileSystemWatcher(templatePath);
+                        _wather.EnableRaisingEvents = true;
+                        _wather.Changed += wather_changed;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"无法监控目录{dir}");
+
+                        LoggerManager.Default.Error($"无法监控目录{dir}");
+                    }
+                    
+    
+                }
+
+                
             }
         }
 

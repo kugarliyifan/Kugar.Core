@@ -4,15 +4,17 @@
     <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net5.0;</TargetFrameworks>
     <RootNamespace>Kugar.Core</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.140</Version>
+    <Version>1.2.143</Version>
     <Authors>Kugar</Authors>
     <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PackageReleaseNotes>1.新增一个TemplateImage和TemplateImageFactory类,用于模板图生成
-2.增加.net 5.0 支持</PackageReleaseNotes>
+    <PackageReleaseNotes>1.去除.netcore版本中,已经过时的类
+2.将Core.Web项目中的QueuedHostedService,ScheduledTaskService以及TimerHostedService移动带本类库中</PackageReleaseNotes>
     <Description>一个提供基础类库和扩展函数的类库</Description>
     <RepositoryUrl>https://github.com/kugarliyifan/Kugar.Core</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kugarliyifan/Kugar.Core</PackageProjectUrl>
+	  <IncludeSymbols>true</IncludeSymbols>
+     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -40,11 +42,10 @@
     <Compile Include="..\Kugar.Core\BaseStruct\IAwaitable.cs" Link="BaseStruct\IAwaitable.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\JoinMultiEnumable.cs" Link="BaseStruct\JoinMultiEnumable.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\KeyValuePairEx.cs" Link="BaseStruct\KeyValuePairEx.cs" />
-    <Compile Include="..\Kugar.Core\BaseStruct\KNotifyCollectionChanged.cs" Link="BaseStruct\KNotifyCollectionChanged.cs" />
+    <Compile Include="..\Kugar.Core\BaseStruct\KNotifyCollectionChanged.cs" Link="Collections\KNotifyCollectionChanged.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\Lazy.cs" Link="BaseStruct\Lazy.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\ListItemObject.cs" Link="BaseStruct\ListItemObject.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\MultiTypeKeyDictionary.cs" Link="BaseStruct\MultiTypeKeyDictionary.cs" />
-    <Compile Include="..\Kugar.Core\BaseStruct\MutileThreadingTimer.cs" Link="BaseStruct\MutileThreadingTimer.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\NewValueCollection.cs" Link="BaseStruct\NewValueCollection.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\NotifyChangedField.cs" Link="BaseStruct\NotifyChangedField.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\Pool.cs" Link="BaseStruct\Pool.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="..\Kugar.Core\BaseStruct\ResultReturn.cs" Link="BaseStruct\ResultReturn.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\SpinLock.cs" Link="BaseStruct\SpinLock.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\SpinWait.cs" Link="BaseStruct\SpinWait.cs" />
-    <Compile Include="..\Kugar.Core\BaseStruct\TaskManager.cs" Link="BaseStruct\TaskManager.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\TimerEx.cs" Link="BaseStruct\TimerEx.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\TimerPool.cs" Link="BaseStruct\TimerPool.cs" />
     <Compile Include="..\Kugar.Core\BaseStruct\Tree.cs" Link="BaseStruct\Tree.cs" />
@@ -124,7 +124,6 @@
     <Compile Include="..\Kugar.Core\ExtMethod\TypeDocumentationExt.cs" Link="ExtMethod\TypeDocumentationExt.cs" />
     <Compile Include="..\Kugar.Core\ExtMethod\TypeExtMethod.cs" Link="ExtMethod\TypeExtMethod.cs" />
     <Compile Include="..\Kugar.Core\ExtMethod\UriAbout.cs" Link="ExtMethod\UriAbout.cs" />
-    <Compile Include="..\Kugar.Core\ExtMethod\ValueUtility.cs" Link="ExtMethod\ValueUtility.cs" />
     <Compile Include="..\Kugar.Core\ExtMethod\XmlExtMethod.cs" Link="ExtMethod\XmlExtMethod.cs" />
     <Compile Include="..\Kugar.Core\Log\ILogFactory.cs" Link="Log\ILogFactory.cs" />
     <Compile Include="..\Kugar.Core\Log\ILogger.cs" Link="Log\ILogger.cs" />
@@ -158,6 +157,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.2' ">
@@ -170,6 +170,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
 
@@ -183,6 +184,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.3" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.11" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
@@ -195,6 +198,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.11" />
   </ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0'">
@@ -207,10 +211,14 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
 	</ItemGroup>
 
 
   <ItemGroup>
+    
+    <PackageReference Include="ncrontab" Version="3.3.1" />
+    
     <PackageReference Include="QRCoder" Version="1.4.1" />
   </ItemGroup>
 </Project>

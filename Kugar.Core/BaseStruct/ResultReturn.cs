@@ -664,7 +664,7 @@ namespace Kugar.Core.BaseStruct
 
                     if (errorJson!=null)
                     {
-                        error = new Exception(errorJson.GetString("message",comparison:StringComparison.CurrentCultureIgnoreCase));
+                        error = new Exception(errorJson.GetString("message","",comparison:StringComparison.CurrentCultureIgnoreCase));
 
 
 
@@ -675,7 +675,7 @@ namespace Kugar.Core.BaseStruct
                 }
 
                 var returnCode = s.GetInt("returnCode",comparison:StringComparison.CurrentCultureIgnoreCase);
-                var message = s.GetString("message", comparison: StringComparison.CurrentCultureIgnoreCase);
+                var message = s.GetString("message","", comparison: StringComparison.CurrentCultureIgnoreCase);
 
                 var value = Activator.CreateInstance(objectType, isSuccess, returnData, message, returnCode, error);
 
