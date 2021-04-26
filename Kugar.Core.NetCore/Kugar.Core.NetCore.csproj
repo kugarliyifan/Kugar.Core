@@ -4,12 +4,11 @@
     <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net5.0;</TargetFrameworks>
     <RootNamespace>Kugar.Core</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.143</Version>
+    <Version>1.2.149</Version>
     <Authors>Kugar</Authors>
     <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PackageReleaseNotes>1.去除.netcore版本中,已经过时的类
-2.将Core.Web项目中的QueuedHostedService,ScheduledTaskService以及TimerHostedService移动带本类库中</PackageReleaseNotes>
+    <PackageReleaseNotes>1.更新了fasterflect库的版本</PackageReleaseNotes>
     <Description>一个提供基础类库和扩展函数的类库</Description>
     <RepositoryUrl>https://github.com/kugarliyifan/Kugar.Core</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kugarliyifan/Kugar.Core</PackageProjectUrl>
@@ -175,7 +174,7 @@
 
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0'">
-    <PackageReference Include="Fasterflect.Netstandard" Version="1.0.9" />
+	  <PackageReference Include="fasterflect" Version="3.0.0" />
     <PackageReference Include="LINQKit.Core" Version="1.1.21" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
@@ -189,7 +188,7 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Fasterflect.Netstandard" Version="1.0.9" />
+	  <PackageReference Include="fasterflect" Version="3.0.0" />
     <PackageReference Include="LINQKit.Core" Version="1.1.21" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
@@ -202,7 +201,7 @@
   </ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0'">
-		<PackageReference Include="Fasterflect.Netstandard" Version="1.0.9" />
+		<PackageReference Include="fasterflect" Version="3.0.0" />
 		<PackageReference Include="LINQKit.Core" Version="1.1.21" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />

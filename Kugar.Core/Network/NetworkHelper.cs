@@ -98,23 +98,66 @@ namespace Kugar.Core.Network
 
         }
 
-//#if NET45
-//        /// <summary>
-//        ///     判断当前系统是否已连接互联网
-//        /// </summary>
-//        /// <returns></returns>
-//        public static bool IsConnectedToInternet()
-//        {
-//            int desc;
-//            return Api.InternetGetConnectedState(out desc, 0);
-//        }      
-//  #endif
+        /// <summary>获取可用的IP地址</summary>
+        /// <returns></returns>
+        public static IEnumerable<IPAddress> GetIPs()
+        {
+            var dic = new Dictionary<UnicastIPAddressInformation, Int32>();
+            foreach (var item in GetActiveInterfaces())
+            {
+                if (item != null && item.UnicastAddresses.Count > 0)
+                {
+                    var gw = item.GatewayAddresses.Count;
+                    foreach (var elm in item.UnicastAddresses)
+                    {
+                        try
+                        {
+                            if (elm.DuplicateAddressDetectionState != DuplicateAddressDetectionState.Preferred) continue;
+                        }
+                        catch { }
+
+                        dic.Add(elm, gw);
+                    }
+                }
+            }
+
+            // 带网关的接口地址很重要，优先返回
+            // Linux下不支持PrefixOrigin
+            var ips = dic.OrderByDescending(e => e.Value)
+                //.ThenByDescending(e => e.Key.PrefixOrigin == PrefixOrigin.Dhcp || e.Key.PrefixOrigin == PrefixOrigin.Manual)
+                .Select(e => e.Key.Address).ToList();
+
+            return ips;
+        }
+
+        public static IEnumerable<IPInterfaceProperties> GetActiveInterfaces()
+        {
+            foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (item.OperationalStatus != OperationalStatus.Up) continue;
+
+                var ip = item.GetIPProperties();
+                if (ip != null) yield return ip;
+            }
+        }
+
+        //#if NET45
+        //        /// <summary>
+        //        ///     判断当前系统是否已连接互联网
+        //        /// </summary>
+        //        /// <returns></returns>
+        //        public static bool IsConnectedToInternet()
+        //        {
+        //            int desc;
+        //            return Api.InternetGetConnectedState(out desc, 0);
+        //        }      
+        //  #endif
 
 
         //public static IPAddress[] GetLanIPAddress()
         //{
         //    var s = NetworkInterface.GetAllNetworkInterfaces().SelectMany(x=>x.GetIPProperties().);
-            
+
         //    s.Where(x=>x.GetIPProperties().UnicastAddresses[0].Address)
         //}
 
