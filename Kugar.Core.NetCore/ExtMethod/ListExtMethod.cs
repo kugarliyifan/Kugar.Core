@@ -1382,6 +1382,146 @@ namespace Kugar.Core.ExtMethod
             return src != null && src.Any();
         }
 
+        /// <summary>
+        /// 根据index获取列表中的数据,,如果索引超过列表数量,则返回defaultValue中定义的值
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="src"></param>
+        /// <param name="index"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static TElement? GetByIndex<TElement>(this IList<TElement> src,int index, TElement defaultValue)
+        {
+            if (index>=src.Count)
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return src[index];
+            }
+        }
+        
+        /// <summary>
+        /// 根据index,使用foreach遍历可枚举src的数据,并在index位置进行返回,如果超出过索引范围,返回defaultValue参数指定的值
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="src"></param>
+        /// <param name="index"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static TElement? GetByIndex<TElement>(this IEnumerable<TElement> src,int index, TElement defaultValue)
+        {
+            var i = 0;
+
+            foreach (var item in src)
+            {
+                if (i==index)
+                {
+                    return item;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            return defaultValue;
+        }
+        
+        ///// <summary>
+        ///// 根据index获取列表中的数据,,如果索引超过列表数量,则返回defaultValue中定义的值
+        ///// </summary>
+        ///// <typeparam name="TElement"></typeparam>
+        ///// <param name="src"></param>
+        ///// <param name="index"></param>
+        ///// <param name="defaultValue"></param>
+        ///// <returns></returns>
+        //public static TElement? GetByIndex<TElement>(this IList<TElement> src,int index) where TElement:class
+        //{
+        //    if (index>=src.Count)
+        //    {
+        //        return (TElement?)null;
+        //    }
+        //    else
+        //    {
+        //        return src[index];
+        //    }
+        //}
+        
+        ///// <summary>
+        ///// 根据index,使用foreach遍历可枚举src的数据,并在index位置进行返回,如果超出过索引范围,返回defaultValue参数指定的值
+        ///// </summary>
+        ///// <typeparam name="TElement"></typeparam>
+        ///// <param name="src"></param>
+        ///// <param name="index"></param>
+        ///// <param name="defaultValue"></param>
+        ///// <returns></returns>
+        //public static TElement? GetByIndex<TElement>(this IEnumerable<TElement> src,int index) where TElement:class
+        //{
+        //    var i = 0;
+
+        //    foreach (var item in src)
+        //    {
+        //        if (i==index)
+        //        {
+        //            return item;
+        //        }
+        //        else
+        //        {
+        //            i++;
+        //        }
+        //    }
+
+        //    return  (TElement?)null;
+        //}
+
+        /// <summary>
+        /// 根据index获取列表中的数据,,如果索引超过列表数量,则返回defaultValue中定义的值
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="src"></param>
+        /// <param name="index"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static TElement? GetByIndex<TElement>(this IList<TElement?> src,int index) where TElement:class
+        {
+            if (index>=src.Count)
+            {
+                return (TElement?)null;
+            }
+            else
+            {
+                return src[index];
+            }
+        }
+        
+        /// <summary>
+        /// 根据index,使用foreach遍历可枚举src的数据,并在index位置进行返回,如果超出过索引范围,返回defaultValue参数指定的值
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="src"></param>
+        /// <param name="index"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static TElement? GetByIndex<TElement>(this IEnumerable<TElement?> src,int index) where TElement:class
+        {
+            var i = 0;
+
+            foreach (var item in src)
+            {
+                if (i==index)
+                {
+                    return item;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            return  (TElement?)null;
+        }
 
         //public static bool HasData<T>(this IList<T> src)
         //{

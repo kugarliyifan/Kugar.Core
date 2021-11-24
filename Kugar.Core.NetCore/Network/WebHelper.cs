@@ -710,7 +710,7 @@ namespace Kugar.Core.Network
                 {
                     var content = "";
 
-                    if (resp==null)
+                    if (resp!=null && resp.Content!=null)
                     {
                         content = await resp.Content.ReadAsStringAsync();
                     }
