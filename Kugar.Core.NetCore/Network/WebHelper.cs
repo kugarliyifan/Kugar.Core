@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -53,9 +55,9 @@ namespace Kugar.Core.Network
 
         public static WebDownloadFileInfo GetFile(Uri url)
         {
-            var client=new HttpClient();
-            
-            var resp=client.GetAsync(url).Result;
+            var client = new HttpClient();
+
+            var resp = client.GetAsync(url).Result;
 
             var contentType = resp.Headers.GetValues("Content-Type").FirstOrDefault();
 
@@ -87,7 +89,7 @@ namespace Kugar.Core.Network
 
         public class DefaultHttpClientHandler : HttpClientHandler
         {
-            public DefaultHttpClientHandler() => this.ServerCertificateCustomValidationCallback+=delegate { return true; };
+            public DefaultHttpClientHandler() => this.ServerCertificateCustomValidationCallback += delegate { return true; };
         }
 
         /// <summary>
@@ -104,12 +106,12 @@ namespace Kugar.Core.Network
             private Encoding _encoding = System.Text.Encoding.UTF8;
             private Dictionary<string, object> _values = null;
             private ContentTypeEnum _contentType = ContentTypeEnum.FormUrlencoded;
-            private static IHttpClientFactory _httpClientFactory=null;
+            private static IHttpClientFactory _httpClientFactory = null;
             private bool _hasChangeContentType = false;
-            private Lazy<Dictionary<string, string>>_cookies =new Lazy<Dictionary<string, string>>();
+            private Lazy<Dictionary<string, string>> _cookies = new Lazy<Dictionary<string, string>>();
             private int _retryCount = 1;
 
-            private static ServiceProvider _service = null;
+            private static IServiceProvider _service = null;
             //private static HttpClient
 
             #region 固定字段
@@ -139,13 +141,23 @@ namespace Kugar.Core.Network
                 DefaultUserAgent = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11";
                 DefaultAccept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/x-ms-application, application/x-ms-xbap, application/vnd.ms-xpsdocument, application/xaml+xml, application/vnd.ms-excel, application/msword, */*";
 
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+
+
                 var serviceCollection = new ServiceCollection();
                 serviceCollection.AddHttpClient("defaulthttpgetter")
                     .ConfigurePrimaryHttpMessageHandler(x => new DefaultHttpClientHandler());
 
-                _service =serviceCollection.BuildServiceProvider();
-                _httpClientFactory =  _service.GetRequiredService<IHttpClientFactory>();
-             
+                _service = serviceCollection.BuildServiceProvider();
+                _httpClientFactory = _service.GetRequiredService<IHttpClientFactory>();
+
+            }
+
+            public static void SetServiceProvider(IServiceProvider provider)
+            {
+                _service = provider;
+
             }
 
             public static string DefaultAccept { get; set; }
@@ -167,16 +179,16 @@ namespace Kugar.Core.Network
                 //request.Headers.Add("Accept-Encoding", "gzip,deflate");
                 //request.Timeout = timeout;
                 //request.ReadWriteTimeout = timeout;
-                _requestMsg=new HttpRequestMessage(HttpMethod.Get, url);
-                _requestMsg.Method=HttpMethod.Get;
+                _requestMsg = new HttpRequestMessage(HttpMethod.Get, url);
+                _requestMsg.Method = HttpMethod.Get;
                 _requestMsg.Headers.AcceptCharset.ParseAdd("utf-8;q=0.7,*;q=0.3");
                 _requestMsg.Headers.UserAgent.ParseAdd(DefaultUserAgent);
                 _requestMsg.Headers.AcceptEncoding.ParseAdd("gzip,deflate");
                 _requestMsg.Headers.Accept.ParseAdd("*/*,text/html,application/xhtml+xml,application/xml,application/json ;q=0.9, */*;q=0.8");
-                
+
                 //_handler.AllowAutoRedirect = true;
                 //_handler.Credentials = CredentialCache.DefaultCredentials;
-                
+
             }
 
             /// <summary>
@@ -186,7 +198,7 @@ namespace Kugar.Core.Network
             /// <returns></returns>
             public HttpWebGetter RetryCount(int tryCount)
             {
-                if (tryCount<=0)
+                if (tryCount <= 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(tryCount));
                 }
@@ -245,7 +257,7 @@ namespace Kugar.Core.Network
                 }
                 else if (headerName.CompareTo("ContentType", true) || headerName.CompareTo("Content-Type", true))
                 {
-                    _requestMsg.Headers.Add("Content-Type",value);
+                    _requestMsg.Headers.Add("Content-Type", value);
                     //_request.ContentType = value;
                 }
                 else if (headerName.CompareTo("user-agent", true))
@@ -259,8 +271,8 @@ namespace Kugar.Core.Network
                 }
                 else if (headerName.CompareTo("referer", true))
                 {
-                    _requestMsg.Headers.Referrer=new Uri(value);
-                   // _request.Referer = value;
+                    _requestMsg.Headers.Referrer = new Uri(value);
+                    // _request.Referer = value;
                 }
                 else
                 {
@@ -368,14 +380,14 @@ namespace Kugar.Core.Network
             /// <returns></returns>
             public HttpWebGetter SetAuthentication(string scheme, string token)
             {
-                _requestMsg.Headers.Authorization=new AuthenticationHeaderValue(scheme,token);
+                _requestMsg.Headers.Authorization = new AuthenticationHeaderValue(scheme, token);
 
                 return this;
             }
 
             //public HttpWebGetter SetProxy(WebProxy proxy)
             //{
-                
+
             //}
 
             /// <summary>
@@ -442,9 +454,9 @@ namespace Kugar.Core.Network
             /// 使用Post提交数据,并将返回数据作为string返回
             /// </summary>
             /// <returns></returns>
-            public async Task<string> Post_StringAsync(CancellationToken? cancellationToken=null)
+            public async Task<string> Post_StringAsync(CancellationToken? cancellationToken = null)
             {
-                _requestMsg.Method= HttpMethod.Post;
+                _requestMsg.Method = HttpMethod.Post;
 
                 var data = await getResponseData(cancellationToken);
 
@@ -461,11 +473,11 @@ namespace Kugar.Core.Network
             {
                 _requestMsg.Method = HttpMethod.Get;
 
-                var data =await getResponseData(cancellationToken);
+                var data = await getResponseData(cancellationToken);
 
                 return System.Text.Encoding.UTF8.GetString(data);
             }
-            
+
             /// <summary>
             /// 使用Post提交数据,并将数据作为Json格式返回
             /// </summary>
@@ -475,7 +487,7 @@ namespace Kugar.Core.Network
                 //_requestMsg.Headers.Add("Content-Type", getContentType(ContentTypeEnum.Json));
 
 
-                var str =await  Post_StringAsync(cancellationToken);
+                var str = await Post_StringAsync(cancellationToken);
 
                 return JObject.Parse(str);
             }
@@ -487,24 +499,24 @@ namespace Kugar.Core.Network
             public async Task<JObject> Get_JsonAsync(CancellationToken? cancellationToken = null)
             {
                 //_requestMsg.Headers.Add("Content-Type", getContentType(ContentTypeEnum.Json));
-                
-                var str =await Get_StringAsync(cancellationToken);
+
+                var str = await Get_StringAsync(cancellationToken);
 
                 return JObject.Parse(str);
             }
 
             public async Task<byte[]> Get_BinaryAsync(CancellationToken? cancellationToken = null)
             {
-                _requestMsg.Method=HttpMethod.Get;
-                
+                _requestMsg.Method = HttpMethod.Get;
+
                 var resp = await getResponseData(cancellationToken);
 
                 return resp;
             }
-            
+
             public async Task<byte[]> Post_BinaryAsync(CancellationToken? cancellationToken = null)
             {
-                _requestMsg.Method=HttpMethod.Post;
+                _requestMsg.Method = HttpMethod.Post;
 
                 var resp = await getResponseData(cancellationToken);
 
@@ -515,8 +527,8 @@ namespace Kugar.Core.Network
             {
                 var str = await Get_StringAsync(cancellationToken);
 
-                var xml=new XmlDocument();
-                
+                var xml = new XmlDocument();
+
                 xml.LoadXml(str);
 
                 return xml;
@@ -531,6 +543,20 @@ namespace Kugar.Core.Network
                 xml.LoadXml(str);
 
                 return xml;
+            }
+
+            private Lazy<List<X509Certificate>> _certificates = new Lazy<List<X509Certificate>>(() => new List<X509Certificate>(2));
+
+            /// <summary>
+            /// 添加证书
+            /// </summary>
+            /// <param name="certificates"></param>
+            /// <returns></returns>
+            public HttpWebGetter AddCertificate(params X509Certificate[] certificates)
+            {
+                _certificates.Value.AddRange(certificates);
+
+                return this;
             }
 
             //public Stream Get_File()
@@ -579,18 +605,17 @@ namespace Kugar.Core.Network
 
             private async Task<byte[]> getResponseData(CancellationToken? cancellationToken)
             {
-                if (cancellationToken==null)
+                if (cancellationToken == null)
                 {
-                    cancellationToken=new CancellationToken();
+                    cancellationToken = new CancellationToken();
                 }
 
                 //var client = new HttpClient(_handler, true);
-                var client = _httpClientFactory.CreateClient("defaulthttpgetter");
-                client.BaseAddress = _requestMsg.RequestUri;
-           
-                var contentType = _contentType;
 
-                if (_requestMsg.Method== HttpMethod.Post)
+
+                var contentType = _contentType;
+                HttpContent content = null;
+                if (_requestMsg.Method == HttpMethod.Post)
                 {
                     if (_jsonContent != null)
                     {
@@ -599,7 +624,7 @@ namespace Kugar.Core.Network
                             contentType = ContentTypeEnum.Json;
                         }
 
-                        var content = new StringContent(_jsonContent.ToStringEx(Formatting.None), _encoding, getContentType(contentType));
+                        content = new StringContent(_jsonContent.ToStringEx(Formatting.None), _encoding, getContentType(contentType));
 
                         _requestMsg.Content = content;
                     }
@@ -619,47 +644,48 @@ namespace Kugar.Core.Network
                             }
                         }
 
-                        if (!hasFile && contentType!=ContentTypeEnum.FormData)
+                        if (!hasFile && contentType != ContentTypeEnum.FormData)
                         {
-                            var content=new FormUrlEncodedContent(_values.Select(x=>new KeyValuePair<string, string>(x.Key,x.Value.ToStringEx())));
+                            content = new FormUrlEncodedContent(_values.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToStringEx())));
 
                             _requestMsg.Content = content;
-                
+
                         }
                         else
                         {
                             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
-                            var content=new MultipartFormDataContent(boundary);
-
+                            var tmpcontent = new MultipartFormDataContent(boundary);
                             foreach (var value in _values)
                             {
                                 if (value.Value is FormFile)
                                 {
-                                    var file = (FormFile) value.Value;
+                                    var file = (FormFile)value.Value;
 
                                     if (!file.FileData.HasData())
                                     {
                                         continue;
                                     }
-                            
-                                    content.Add(new ByteArrayContent(file.FileData),value.Key,file.FilePath);
+
+                                    tmpcontent.Add(new ByteArrayContent(file.FileData), value.Key, file.FilePath);
                                 }
                                 else
                                 {
-                                    content.Add(new StringContent((string)value.Value),value.Key);
+                                    tmpcontent.Add(new StringContent((string)value.Value), value.Key);
                                 }
                             }
+
+                            content = tmpcontent;
                         }
                     }
                     else
                     {
-                        var content = new StringContent(_stringContent, _encoding, getContentType(contentType));
+                        content = new StringContent(_stringContent, _encoding, getContentType(contentType));
 
-                        _requestMsg.Content = content;
-                    }                   
+
+                    }
                 }
 
-
+                _requestMsg.Content = content;
 
                 if (_cookies.IsValueCreated && _cookies.Value.HasData())
                 {
@@ -667,34 +693,54 @@ namespace Kugar.Core.Network
 
                     _requestMsg.Headers.Add("Cookie", cookie);
                 }
-                
+
                 HttpResponseMessage resp = null;
 
-                retry:
+                using var handler = new DefaultHttpClientHandler();
+                handler.AllowAutoRedirect = true;
+                if (_certificates.IsValueCreated && _certificates.Value.HasData())
+                {
+                    handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                    foreach (var item in _certificates.Value)
+                    {
+                        handler.ClientCertificates.Add(item);
+                    }
+                }
+
+                handler.SslProtocols = SslProtocols.Tls12;
+                handler.ServerCertificateCustomValidationCallback = (_,_,_,_) => true;
+                using var client = new HttpClient(handler);
+
+                    //var factory = _service.GetRequiredService<IHttpClientFactory>();
+
+            //var client = factory.CreateClient("defaulthttpgetter");
+
+            retry:
 
                 try
                 {
-                    
+                    client.BaseAddress = _requestMsg.RequestUri;
+
                     //if (cancellationToken.HasValue)
                     //{
-                        resp = (await client.SendAsync(_requestMsg, cancellationToken.Value)).EnsureSuccessStatusCode();
+                    resp = (await client.SendAsync(_requestMsg, cancellationToken.Value)).EnsureSuccessStatusCode();
                     //}
 
-                    var sourceStream =await resp.Content.ReadAsStreamAsync();
+                    var sourceStream = await resp.Content.ReadAsStreamAsync();
                     byte[] data = null;
 
-                    if (resp.Content.Headers.ContentEncoding.Any(x=>x.Contains("gzip")))
+                    if (resp.Content.Headers.ContentEncoding.Any(x => x.Contains("gzip")))
                     {
                         using (GZipStream stream = new GZipStream(sourceStream, CompressionMode.Decompress))
                         {
-                            data =await stream.ReadAllBytesAsync();
+                            data = await stream.ReadAllBytesAsync();
                         }
                     }
                     else if (resp.Content.Headers.ContentEncoding.Any(x => x.Contains("deflate")))
                     {
                         using (DeflateStream stream = new DeflateStream(sourceStream, CompressionMode.Decompress))
                         {
-                            data =await stream.ReadAllBytesAsync();
+                            data = await stream.ReadAllBytesAsync();
                         }
                     }
                     else
@@ -708,26 +754,29 @@ namespace Kugar.Core.Network
                 }
                 catch (Exception e)
                 {
-                    var content = "";
+                    var responseContent = "";
 
-                    if (resp!=null && resp.Content!=null)
+                    if (resp != null && resp.Content != null)
                     {
-                        content = await resp.Content.ReadAsStringAsync();
+                        responseContent = await resp.Content.ReadAsStringAsync();
                     }
 
-                    LoggerManager.Default.Debug("读取错误:" + (string.IsNullOrWhiteSpace(content)?e.Message:content));
+                    LoggerManager.Default.Debug("读取错误:" + (string.IsNullOrWhiteSpace(responseContent) ? e.Message : content));
                     _retryCount--;
 
-                    if (_retryCount>0)
+                    if (_retryCount > 0)
                     {
                         goto retry;
                     }
 
-                    throw new HttpWebGetterException(_requestMsg.RequestUri.ToStringEx(),e,content);
+                    throw new HttpWebGetterException(_requestMsg.RequestUri.ToStringEx(), e, responseContent);
                 }
-                
+
+
+
+
             }
-            
+
             private static readonly Regex reg_charset = new Regex(@"charset\b\s*=\s*(?<charset>[^""]*)");
 
             #region 即将删掉的函数
@@ -754,7 +803,7 @@ namespace Kugar.Core.Network
             public HttpWebGetter SetParamter(string name, FormFile file)
             {
                 return SetParameter(name, file);
-            }            
+            }
 
             #endregion
 
@@ -815,5 +864,6 @@ namespace Kugar.Core.Network
             public byte[] Data { set; get; }
         }
     }
+
 }
 
