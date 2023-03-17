@@ -27,6 +27,7 @@ namespace Kugar.Core.Services
     /// </summary>
     public class BackgroundTaskQueue : IBackgroundTaskQueue
     {
+     
         private ConcurrentQueue<QueueHosedInvoker> _workItems =
             new ConcurrentQueue<QueueHosedInvoker>();
         private SemaphoreSlim _signal = new SemaphoreSlim(0);
@@ -58,17 +59,15 @@ namespace Kugar.Core.Services
     /// <summary>
     /// 在后台中,使用队列的方式执行任务
     /// </summary>
-    public class QueuedHostedService : BackgroundService
+    public class QueuedHostedService : BackgroundServiceEx
     {
-        private readonly ILogger _logger;
-        private IServiceProvider _provider;
+        private readonly ILogger _logger; 
         private IBackgroundTaskQueue _taskQueue;
 
         public QueuedHostedService(IBackgroundTaskQueue taskQueue, IServiceProvider provider,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory):base(provider)
         {
-            _logger = loggerFactory?.CreateLogger<QueuedHostedService>();
-            _provider = provider;
+            _logger = loggerFactory?.CreateLogger<QueuedHostedService>(); 
             _taskQueue = taskQueue;
         }
 
@@ -87,7 +86,7 @@ namespace Kugar.Core.Services
                 {
                     continue;
                 }
-                using (var scope = _provider.CreateScope())
+                using (var scope = Provider.CreateScope())
                 {
                     try
                     {

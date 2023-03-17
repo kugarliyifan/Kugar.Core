@@ -13,17 +13,15 @@ namespace Kugar.Core.Services
     /// <summary>
     /// 一个简单的corn模式的计划任务<br/>用于在一些已知的计划时间执行某些任务的情况下使用,Cron属性在服务启动后,变无法修改,如需配置运行时可修改,请使用Hangfire之类的其他第三方框架
     /// </summary>
-    public abstract class SimpleScheduledTaskService : BackgroundService
-    {
-        private IServiceProvider _provider = null;
+    public abstract class SimpleScheduledTaskService : BackgroundServiceEx
+    { 
         private CrontabSchedule _crontab = null;
         //private string _cron;
         private bool _enabled=true;
         private bool _isInited = false;
 
-        protected SimpleScheduledTaskService(IServiceProvider provider)
-        {
-            _provider = provider;
+        protected SimpleScheduledTaskService(IServiceProvider provider):base(provider)
+        { 
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -46,13 +44,13 @@ namespace Kugar.Core.Services
 
                 await Task.Delay(interval, stoppingToken);
 
-                var logger = (ILogger)_provider.GetService(typeof(ILogger));
+                var logger = (ILogger)base.GetService(typeof(ILogger));
 
                 try
                 {
                     logger?.Log(LogLevel.Trace, $"启动计划任务:{this.GetType().Name}");
 
-                    await Run(_provider, stoppingToken);
+                    await Run(Provider, stoppingToken);
 
                     logger?.Log(LogLevel.Trace, $"完成计划任务:{this.GetType().Name}");
                 }

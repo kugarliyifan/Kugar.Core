@@ -11,6 +11,8 @@ using System.Threading;
 using Kugar.Core.Configuration.Providers;
 using Kugar.Core.ExtMethod;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json.Linq;
 
 namespace Kugar.Core.Configuration
 {
@@ -31,7 +33,7 @@ namespace Kugar.Core.Configuration
     /// </summary>
     public class CustomConfigManager : MarshalByRefObject, ICustomConfigManager
     {
-        private ConfigurationBuilder _configBuilder=new ConfigurationBuilder();
+        private ConfigurationBuilder _configBuilder = new ConfigurationBuilder();
         private static ICustomConfigSection _appSettings = null;
         private static ICustomConfigSection _connSettings = null;
         private IConfigurationRoot _configuration = null;
@@ -50,7 +52,7 @@ namespace Kugar.Core.Configuration
             _defauleManager = new Lazy<CustomConfigManager>(() =>
             {
                 var c = new CustomConfigManager();
-                
+
                 return c;
             });
         }
@@ -73,6 +75,65 @@ namespace Kugar.Core.Configuration
             }
         }
 
+        public TValue GetValue<TValue>(string configName, TValue defaultValue = default)
+        {
+            var type = typeof(TValue);
+
+            if (type == typeof(string))
+            {
+                return (TValue)Convert.ChangeType(_configuration[configName], type);
+            }
+            else
+            {  
+                var section = getSection(configName);
+
+                if (section == null)
+                {
+                    return defaultValue;
+                }
+                else
+                {
+                    return section.Get<TValue>();
+                }
+            }
+        }
+
+        public TValue[] GetArray<TValue>(string configName)
+        {
+            var section = getSection(configName);
+
+            if (section==null)
+            {
+                return Array.Empty<TValue>();
+            }
+            else
+            {
+                return section.Get<TValue[]>();
+            }
+        }
+
+        private IConfiguration getSection(string configName)
+        { 
+            var configNames = configName.Split(':');
+
+            IConfiguration section = _configuration.GetSection(configNames[0]);
+
+            if (section != null)
+            {
+                foreach (var name in configNames.Skip(1))
+                {
+                    section = section.GetSection(name);
+
+                    if (section == null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return section;
+        }
+
         /// <summary>
         ///     返回默认当前.config中AppSettings节的配置值
         /// </summary>
@@ -89,7 +150,7 @@ namespace Kugar.Core.Configuration
         /// <param name="configName">配置项名称</param>
         /// <param name="path">配置项路径,如果是空,则为当前路径下</param>
         /// <returns></returns>
-        public ICustomConfigManager AddJsonFile(string jsonFileName, string path = "", bool optional=true, bool reloadOnChange=false)
+        public ICustomConfigManager AddJsonFile(string jsonFileName, string path = "", bool optional = true, bool reloadOnChange = false)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -100,16 +161,26 @@ namespace Kugar.Core.Configuration
 
             _configuration = _configBuilder.Build();
 
+            if (reloadOnChange)
+            {
+                ChangeToken.OnChange(() => _configuration.GetReloadToken(), () =>
+                {
+                    this.OnChanged?.Invoke(this, _configuration);
+                });
+            }
+
             return this;
         }
+
+        public event EventHandler<IConfigurationRoot> OnChanged;
 
 
         /// <summary>
         ///     返回默认的配置节点,默认会自动添加.config文件中的AppSettings和ConnectionSettings节点
         /// </summary>
-        public static CustomConfigManager Default { get { return _defauleManager.Value; } }
+        public static CustomConfigManager Default => _defauleManager.Value;
 
-        private  static ICustomConfigSection Build(string sectionName, ICustomConfigProvider provider = null)
+        private static ICustomConfigSection Build(string sectionName, ICustomConfigProvider provider = null)
         {
             if (provider == null)
             {

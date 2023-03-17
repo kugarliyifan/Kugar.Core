@@ -700,7 +700,7 @@ namespace Kugar.Core.Network
                 handler.AllowAutoRedirect = true;
                 if (_certificates.IsValueCreated && _certificates.Value.HasData())
                 {
-                    handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                    //handler.ClientCertificateOptions = ClientCertificateOption.Automatic;
                     foreach (var item in _certificates.Value)
                     {
                         handler.ClientCertificates.Add(item);

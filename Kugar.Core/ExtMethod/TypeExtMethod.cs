@@ -55,7 +55,7 @@ namespace Kugar.Core.ExtMethod
 
         private static bool checkTypeIsDispose(Type type)
         {
-            return type.IsImplementlInterface(typeof(IDisposable));
+            return type.IsImplementInterface(typeof(IDisposable));
         }
 
         /// <summary>
@@ -272,6 +272,7 @@ namespace Kugar.Core.ExtMethod
         /// <param name="type">类型Type对象</param>
         /// <param name="interfaceType">判断用的接口Type</param>
         /// <returns></returns>
+        [Obsolete]
         public static bool IsImplementlInterface(this Type type,Type interfaceType)
         {
             var interfacelist = type.GetInterfaces();
@@ -290,6 +291,41 @@ namespace Kugar.Core.ExtMethod
                         var genType = ifc.GetGenericTypeDefinition();
 
                         if (genType==interfaceType )//|| genType.IsAssignableFrom(interfaceType))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+
+        }
+
+        /// <summary>
+        ///     判断指定类型是否实现了某个接口
+        /// </summary>
+        /// <param name="type">类型Type对象</param>
+        /// <param name="interfaceType">判断用的接口Type</param>
+        /// <returns></returns>
+        public static bool IsImplementInterface(this Type type, Type interfaceType)
+        {
+            var interfacelist = type.GetInterfaces();
+
+            if (interfacelist != null && interfacelist.Length > 0)
+            {
+                foreach (var ifc in interfacelist)
+                {
+                    if (ifc == interfaceType)// || ifc.IsAssignableFrom(interfaceType))
+                    {
+                        return true;
+                    }
+
+                    if (ifc.IsGenericType)
+                    {
+                        var genType = ifc.GetGenericTypeDefinition();
+
+                        if (genType == interfaceType)//|| genType.IsAssignableFrom(interfaceType))
                         {
                             return true;
                         }
@@ -354,7 +390,7 @@ namespace Kugar.Core.ExtMethod
 			var ret=false;
 			
 			if (baseType.IsInterface) {
-				ret=IsImplementlInterface(srcType,baseType);
+				ret= IsImplementInterface(srcType,baseType);
 				//return IsImplementlInterface(srcType,baseType);
 			}
 			
@@ -426,7 +462,7 @@ namespace Kugar.Core.ExtMethod
 			}
 			
 			if (baseType.IsInterface) {
-				return IsImplementlInterface(srcType,baseType);
+				return IsImplementInterface(srcType,baseType);
 			}
 			
 			if (!srcType.IsAssignableFrom(baseType) && !srcType.IsSubclassOf(baseType)) {

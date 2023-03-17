@@ -50,7 +50,36 @@ namespace Kugar.Core.ExtMethod
         public const string ipaddressRegex = @"^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$";
         public const string phoneNumRegex = @"\d{3}-\d{8}|\d{4}-\d{7}";
         public const string urlRegex = @"^(?=[^&])(?:(?<scheme>[^:/?#]+):)?(?://(?<authority>[^/?#]*))?(?<path>[^?#]*)(?:\?(?<query>[^#]*))?(?:#(?<fragment>.*))?";
-        private static Regex _mobileRegex = new Regex(@"(1[3,4,5,6,7,8,9][0-9])\d{8}$");
+        public static Regex mobileRegex = new Regex(@"(1[3,4,5,6,7,8,9][0-9])\d{8}$");
+        public static Regex intRegex = new Regex("^-?[1-9]\\d*|0$", RegexOptions.Compiled);
+        public static Regex numberRegex =
+            new Regex("^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$", RegexOptions.Compiled);
+        public static Regex guidRegex = new Regex("[a-f\\d]{4}(?:[a-f\\d]{4}-){4}[a-f\\d]{12}", RegexOptions.Compiled);
+
+        /// <summary>
+        /// 是否为整数,包括正负数
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool IsInt(string input)
+        {
+            return intRegex.IsMatch(input);
+        }
+
+        /// <summary>
+        /// 是否为数字,包括正负小数和0
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool IsNumber(string input)
+        {
+            return numberRegex.IsMatch(input);
+        }
+
+        public static bool IsGuid(string input)
+        {
+            return guidRegex.IsMatch(input);
+        }
 
         /// <summary>  
         /// 判断输入的字符串是否是一个合法的手机号  
@@ -60,7 +89,7 @@ namespace Kugar.Core.ExtMethod
         public static bool IsMobilePhone(string input)
         {
             //Regex regex = new Regex();
-            return _mobileRegex.IsMatch(input);
+            return mobileRegex.IsMatch(input);
 
         } 
 

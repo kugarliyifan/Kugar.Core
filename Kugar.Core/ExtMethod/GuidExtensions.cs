@@ -12,5 +12,9 @@ namespace Kugar.Core.ExtMethod
 
             return new Guid(t);
         }
+
+        public static bool IsEmpty(this Guid guid) => guid == Guid.Empty;
+
+        public static bool IsEmpty(this Guid? guid) => guid == null || guid.Value == Guid.Empty;
     }
 }

@@ -1,14 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net5.0;</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net7.0;</TargetFrameworks>
     <RootNamespace>Kugar.Core</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.155</Version>
+    <Version>1.2.165</Version>
     <Authors>Kugar</Authors>
     <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PackageReleaseNotes>1.增加GetByIndex扩展函数</PackageReleaseNotes>
+    <PackageReleaseNotes>
+		1.增加.net 7.0支持
+		2.增加string的扩展函数ToJsonToken
+		3.增加几个通用的正则
+		4.CustomConfigManager增加GetValue,GetArray函数,可以取非string类型的值,并且支持 aa:bb:cc的写法
+		5.CustomConfigManager增加OnChanged事件
+		6.增加GuidJsonConverter和GuidExtensions下的IsEmpty()判断函数
+	</PackageReleaseNotes>
     <Description>一个提供基础类库和扩展函数的类库</Description>
     <RepositoryUrl>https://github.com/kugarliyifan/Kugar.Core</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kugarliyifan/Kugar.Core</PackageProjectUrl>
@@ -137,55 +144,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Collections\" />
     <Folder Include="EventHander\" />
     <Folder Include="Log\" />
     <Folder Include="Compare\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Network\NamedPipe\" />
     <Folder Include="Reflection\" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
-    <PackageReference Include="Fasterflect.Netstandard" Version="1.0.9" />
-    <PackageReference Include="LINQKit.Core" Version="1.1.21" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.1.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.2' ">
-    <PackageReference Include="Fasterflect.Netstandard" Version="1.0.9" />
-    <PackageReference Include="LINQKit.Core" Version="1.1.21" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="2.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.2.0" />
-  </ItemGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0'">
-	  <PackageReference Include="fasterflect" Version="3.0.0" />
-    <PackageReference Include="LINQKit.Core" Version="1.1.21" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.6.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="3.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.11" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.3" />
-  </ItemGroup>
+  </ItemGroup> 
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
 	  <PackageReference Include="fasterflect" Version="3.0.0" />
@@ -198,6 +163,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.11" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.32" />
   </ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0'">
@@ -211,10 +177,24 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0"/>
 	</ItemGroup>
 
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net7.0'">
+		<PackageReference Include="fasterflect" Version="3.0.0" />
+		<PackageReference Include="LINQKit.Core" Version="1.1.21" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+		<PackageReference Include="System.Reflection.Emit" Version="4.6.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4"/>
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     
     <PackageReference Include="ncrontab" Version="3.3.1" />
     

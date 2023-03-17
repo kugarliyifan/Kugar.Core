@@ -9,26 +9,37 @@ namespace Kugar.Core.Services
     /// <summary>
     /// 用于在后台执行一个定时任务,用于取代TimeEx,在asp.net core的环境下使用,继承该类后,使用 services.AddHostedService&lt;当前类类型&gt;();后,自动在后台启动当前定时任务
     /// </summary>
-    public abstract class TimerHostedService : BackgroundService
-    {
-        private IServiceProvider _provider = null;
-
-        protected TimerHostedService(IServiceProvider provider)
+    public abstract class TimerHostedService : BackgroundServiceEx
+    { 
+        protected TimerHostedService(IServiceProvider provider):base(provider)
         {
-            _provider = provider;
+             
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             if (Enabled && Internal>0)
             {
+                if (RunAtInit)
+                {
+                    using var scope = Provider.CreateScope();
+                    try
+                    {
+                        await Run(scope.ServiceProvider, stoppingToken);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     await Task.Delay(Internal, stoppingToken);
 
                     if (!stoppingToken.IsCancellationRequested)
                     {
-                        using (var scope = _provider.CreateScope())
+                        using (var scope = Provider.CreateScope())
                         {
                             try
                             {
@@ -57,6 +68,11 @@ namespace Kugar.Core.Services
         /// <param name="stoppingToken">是否暂停</param>
         /// <returns></returns>
         protected abstract Task Run(IServiceProvider serviceProvider, CancellationToken stoppingToken);
+
+        /// <summary>
+        /// 初始化后,未到定时之前是否先执行一次
+        /// </summary>
+        protected virtual bool RunAtInit { set; get; } = false;
 
         /// <summary>
         /// 定时器间隔触发时间,单位是ms

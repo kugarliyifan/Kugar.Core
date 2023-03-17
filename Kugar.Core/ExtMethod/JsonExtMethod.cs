@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -514,6 +515,92 @@ namespace Kugar.Core.ExtMethod
 
             return null;
         }
+
+        public static JTokenType ToJsonObjectType(this Type type)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                type = type.GetGenericArguments()[0];
+            }
+
+            if (type == typeof(int) ||
+                type == typeof(byte) ||
+                type == typeof(short) ||
+                type == typeof(long) ||
+                type == typeof(uint) ||
+                type == typeof(ushort) ||
+                type == typeof(ulong) ||
+                type.IsEnum
+               )
+            {
+                return JTokenType.Integer;
+            }
+            else if (type == typeof(double) || type == typeof(float) || type == typeof(decimal))
+            {
+                return JTokenType.Float;
+            }
+            else if (type == typeof(string))
+            {
+                return JTokenType.String;
+            }
+            else if (type == typeof(bool))
+            {
+                return JTokenType.Boolean;
+            }
+            else if (type.IsIEnumerable())
+            {
+                return JTokenType.Array;
+            }
+            else if (type == typeof(DateTime))
+            {
+                return JTokenType.String;
+            }
+            else if (type == typeof(Guid))
+            {
+                return JTokenType.String;
+            }
+            else
+            {
+                return JTokenType.Object;
+            }
+        }
+        
+        /// <summary>
+        /// 字符串值转为json的JToken类型
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static JToken ToJsonToken(this string value )
+        {
+            if (value==null)
+            {
+                return null;
+            }
+
+            if (GeneralRegex.IsInt(value))
+            {
+                return value.ToInt();
+            }
+            else if (GeneralRegex.IsNumber(value))
+            {
+                return value.ToFloat();
+            }
+            else if (value.Equals("true", StringComparison.CurrentCultureIgnoreCase) ||
+                     value.Equals("false", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return value.ToBool();
+            }
+            else if (GeneralRegex.IsGuid(value))
+            {
+                return Guid.Parse(value);
+            }
+            else
+            {
+                return value;
+            }
+        }
+
 
         #region WriterExt
 
