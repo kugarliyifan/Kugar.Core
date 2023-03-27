@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp3.1;net5.0;net7.0;</TargetFrameworks>
     <RootNamespace>Kugar.Core</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.165</Version>
+    <Version>1.2.166</Version>
     <Authors>Kugar</Authors>
     <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -12,9 +12,10 @@
 		1.增加.net 7.0支持
 		2.增加string的扩展函数ToJsonToken
 		3.增加几个通用的正则
-		4.CustomConfigManager增加GetValue,GetArray函数,可以取非string类型的值,并且支持 aa:bb:cc的写法
+		4.CustomConfigManager增加GetValue,GetArray函数,可以取非string类型的值,并且支持 aa:bb:cc的写法,
 		5.CustomConfigManager增加OnChanged事件
-		6.增加GuidJsonConverter和GuidExtensions下的IsEmpty()判断函数
+        6.CustomConfigManager将缓存使用过的section,每次配置文件修改后,将会自动清理缓存
+		7.增加GuidJsonConverter和GuidExtensions下的IsEmpty()判断函数
 	</PackageReleaseNotes>
     <Description>一个提供基础类库和扩展函数的类库</Description>
     <RepositoryUrl>https://github.com/kugarliyifan/Kugar.Core</RepositoryUrl>

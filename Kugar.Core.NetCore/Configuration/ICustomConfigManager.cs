@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -37,6 +38,9 @@ namespace Kugar.Core.Configuration
         private static ICustomConfigSection _appSettings = null;
         private static ICustomConfigSection _connSettings = null;
         private IConfigurationRoot _configuration = null;
+
+        private ConcurrentDictionary<string, IConfiguration> _sectionCaches =
+            new ConcurrentDictionary<string, IConfiguration>(StringComparer.CurrentCultureIgnoreCase);
 
         private static Lazy<CustomConfigManager> _defauleManager = null;
         //private ReaderWriterLockSlim _locker = new ReaderWriterLockSlim();
@@ -113,25 +117,28 @@ namespace Kugar.Core.Configuration
         }
 
         private IConfiguration getSection(string configName)
-        { 
-            var configNames = configName.Split(':');
-
-            IConfiguration section = _configuration.GetSection(configNames[0]);
-
-            if (section != null)
+        {
+            return _sectionCaches.GetOrAdd(configName, (str) =>
             {
-                foreach (var name in configNames.Skip(1))
-                {
-                    section = section.GetSection(name);
+                var configNames = str.Split(':');
 
-                    if (section == null)
+                IConfiguration section = _configuration.GetSection(configNames[0]);
+
+                if (section != null)
+                {
+                    foreach (var name in configNames.Skip(1))
                     {
-                        break;
+                        section = section.GetSection(name);
+
+                        if (section == null)
+                        {
+                            break;
+                        }
                     }
                 }
-            }
 
-            return section;
+                return section;
+            }); 
         }
 
         /// <summary>
@@ -166,6 +173,7 @@ namespace Kugar.Core.Configuration
                 ChangeToken.OnChange(() => _configuration.GetReloadToken(), () =>
                 {
                     this.OnChanged?.Invoke(this, _configuration);
+                    _sectionCaches.Clear();
                 });
             }
 
