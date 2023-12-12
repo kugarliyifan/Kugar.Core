@@ -106,14 +106,42 @@ namespace Kugar.Core.Configuration
         {
             var section = getSection(configName);
 
-            if (section==null)
+            var type = typeof(TValue);
+
+            if (section == null)
             {
                 return Array.Empty<TValue>();
-            }
-            else
+            } 
+            if (typeof(TValue).IsNetPrimitiveType())
             {
                 return section.Get<TValue[]>();
             }
+            else
+            {
+                return section.GetChildren()
+                    .Select(x =>
+                    {
+                        if (type.IsRecord())
+                        {
+                            return x.Bind<TValue>();
+                        }
+                        else
+                        {
+                            var co = type.GetConstructors().FirstOrDefault(x => !x.GetParameters().HasData());
+
+                            if (co!=null)
+                            {
+                                return (TValue)co.Invoke(Array.Empty<object>());
+                            }
+                            else
+                            {
+                                return x.Bind<TValue>();
+                            }
+                        }
+                        
+                    })
+                    .ToArray();
+            } 
         }
 
         private IConfiguration getSection(string configName)

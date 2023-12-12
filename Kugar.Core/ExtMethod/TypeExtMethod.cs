@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using DateTime = System.DateTime;
 
 namespace Kugar.Core.ExtMethod
 {
@@ -523,6 +524,39 @@ namespace Kugar.Core.ExtMethod
             {
                 return defaultValue;
             }
+        }
+
+        private static ConcurrentDictionary<Type,bool> _cacheTypeIsNetType=new ConcurrentDictionary<Type,bool>();
+        private static ConcurrentDictionary<Type,bool> _cacheTypeIsRecord=new ConcurrentDictionary<Type,bool>();
+
+        public static bool IsRecord(this Type type)
+        {
+            return _cacheTypeIsRecord.GetOrAdd(type,t => t.GetMethods().Any(m => m.Name == "<Clone>$"));
+        }
+
+        /// <summary>
+        /// 是否是Net元数据类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsNetPrimitiveType(this Type type)
+        {
+            return _cacheTypeIsNetType.GetOrAdd(type, x =>
+            {
+                var innerType = Nullable.GetUnderlyingType(x);
+
+                if (innerType == null)
+                {
+                    return x.IsPrimitive || x == typeof(string) || x.IsEnum || x == typeof(DateTime);
+                }
+                else
+                {
+                    return IsNetPrimitiveType(x);
+                }
+            });
+
+
+
         }
 
         #region "定义格式化委托"

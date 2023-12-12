@@ -271,7 +271,7 @@ namespace Kugar.Core.Network
         /// <returns></returns>
         public UrlModifier ReplaceQuery(string key, string value)
         {
-            var index = _queryKeys.IndexOf(x => x.key == key);
+            var index = _queryKeys.IndexOf(x => x.key.CompareTo(key,true));
 
             if (index < 0)
             {
@@ -293,7 +293,7 @@ namespace Kugar.Core.Network
         /// <returns></returns>
         public UrlModifier ReplaceQuery(string key, object value)
         {
-            var index = _queryKeys.IndexOf(x => x.key == key);
+            var index = _queryKeys.IndexOf(x => x.key.CompareTo(key, true));
 
             if (index < 0)
             {

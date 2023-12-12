@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
@@ -875,6 +876,91 @@ namespace Kugar.Core.ExtMethod
 
         #endregion
 
+        private static char[] removeTrimChars = new[] { ' ' };
+
+        public static StringBuilder TrimEnd(this StringBuilder builder)
+        {
+            return TrimEnd(builder, removeTrimChars);
+        }
+
+        public static StringBuilder Trim(this StringBuilder builder)
+        {
+            return Trim(builder, removeTrimChars);
+        }
+
+        /// <summary>
+        /// 移出末尾指定字符,默认为空格
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="removeChar"></param>
+        /// <returns></returns>
+        public static StringBuilder TrimEnd(this StringBuilder builder,params char[] removeChar )
+        {
+            if (builder.Length == 0)
+                return builder;
+
+            if (!removeChar.HasData())
+            {
+                return builder;
+            }
+
+            var count = 0; 
+
+            for (var i = builder.Length - 1; i >= 0; i--)
+            {
+                if (!removeChar.Contains(builder[i]))
+                    break;
+                count++;
+            }
+
+            if (count > 0)
+                builder.Remove(builder.Length - count, count);
+
+            return builder;
+        }
+
+        /// <summary>
+        /// 移出前后指定字符,默认为空格
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="removeChar"></param>
+        /// <returns></returns>
+        public static StringBuilder Trim(this StringBuilder builder, params char[] removeChar)
+        {
+            if (builder.Length == 0)
+                return builder;
+
+            if (!removeChar.HasData())
+            {
+                return builder;
+            }
+
+            var count = 0;
+            for (var i = 0; i < builder.Length; i++)
+            {
+                if (!removeChar.Contains(builder[i]))
+                    break;
+                count++;
+            }
+
+            if (count > 0)
+            {
+                builder.Remove(0, count);
+                count = 0;
+            }
+
+            for (var i = builder.Length - 1; i >= 0; i--)
+            {
+                if (!removeChar.Contains(builder[i]))
+                    break;
+                count++;
+            }
+
+            if (count > 0)
+                builder.Remove(builder.Length - count, count);
+
+            return builder;
+        }
 
         public static bool IsNullOrEmpty(this string str)
         {
