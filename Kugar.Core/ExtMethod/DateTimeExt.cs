@@ -378,7 +378,7 @@ namespace Kugar.Core.ExtMethod
         public static long ToJavaScriptSeconds(this DateTime dt)
         {
             return (long)((dt.ToUniversalTime().Ticks - DatetimeMinTimeTicks) / 10000000);
-        }
+        } 
 
         /// <summary>
         /// 从秒数转换为datetime,本地时间
