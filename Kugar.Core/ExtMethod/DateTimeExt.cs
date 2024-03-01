@@ -31,7 +31,7 @@ namespace Kugar.Core.ExtMethod
                 throw new ArgumentOutOfRangeException();
             }
 
-            return new DateTime(dt.Year, month, dt.Day, dt.Minute, dt.Minute, dt.Second, dt.Millisecond, dt.Kind);
+            return new DateTime(dt.Year, month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond, dt.Kind);
         }
 
         
